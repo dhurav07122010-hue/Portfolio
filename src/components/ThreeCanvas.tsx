@@ -454,9 +454,15 @@ export const ThreeCanvas: React.FC<ThreeCanvasProps> = () => {
 
       camera.rotation.z = THREE.MathUtils.lerp(
         camera.rotation.z,
-        scroll.velocity * 0.002 + mouse.x * 0.06,
+        scroll.velocity * 0.003 + mouse.x * 0.06,
         0.05
       )
+
+      // Dynamic FOV hyperspace expansion on scroll velocity
+      const targetFov = 62 + Math.min(10, Math.abs(scroll.velocity) * 0.35)
+      camera.fov = THREE.MathUtils.lerp(camera.fov, targetFov, 0.08)
+      camera.updateProjectionMatrix()
+
       camera.lookAt(spineLookTarget.x, spineLookTarget.y - 10, spineLookTarget.z)
 
       // Surrounding Particles reactive wave

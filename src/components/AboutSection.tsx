@@ -1,28 +1,29 @@
 import React from 'react'
 import { GraduationCap, MapPin, BookOpen, Award } from 'lucide-react'
 import { sound } from '../utils/soundEngine'
+import { ScrollReveal } from './ScrollReveal'
 
 export const AboutSection: React.FC = () => {
   return (
     <section id="about" className="relative py-24 px-4 md:px-8 max-w-7xl mx-auto z-10 space-y-16">
       {/* Section Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-zinc-800/80 pb-6">
+      <ScrollReveal parallaxSpeed={-0.08} className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-zinc-800/80 pb-6">
         <div className="space-y-2">
           <div className="flex items-center space-x-2 font-mono text-xs text-[#00f0ff] uppercase tracking-wider">
             <span>[03] // DOSSIER & PROFILE</span>
           </div>
           <h2 className="font-['Syne'] font-black text-4xl sm:text-5xl md:text-6xl text-white tracking-tight">
-            ABOUT DHRUV <span className="text-zinc-600">// 16 Y/O</span>
+            ABOUT DHURAV <span className="text-zinc-600">// 16 Y/O</span>
           </h2>
         </div>
         <div className="font-mono text-xs text-zinc-400 max-w-md">
           Combining student hunger with commercial-grade digital execution from Yamuna Vihar to global standards.
         </div>
-      </div>
+      </ScrollReveal>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         {/* Left Column: Profile Card */}
-        <div className="lg:col-span-5 space-y-6">
+        <ScrollReveal parallaxSpeed={0.06} tilt={true} className="lg:col-span-5 space-y-6">
           <div className="rounded-2xl border border-zinc-800 bg-[#09090f] p-6 sm:p-8 space-y-6">
             {/* Identity Badge */}
             <div className="flex items-center space-x-4">
@@ -32,7 +33,7 @@ export const AboutSection: React.FC = () => {
                 </div>
               </div>
               <div>
-                <h3 className="font-['Syne'] font-bold text-2xl text-white">Dhruv</h3>
+                <h3 className="font-['Syne'] font-bold text-2xl text-white">Dhurav</h3>
                 <div className="flex items-center space-x-2 text-xs font-mono text-[#00f0ff]">
                   <span>Age: 16 Years</span>
                   <span>•</span>
@@ -88,10 +89,10 @@ export const AboutSection: React.FC = () => {
               </a>
             </div>
           </div>
-        </div>
+        </ScrollReveal>
 
         {/* Right Column: Bio, Philosophy & Curriculum */}
-        <div className="lg:col-span-7 space-y-6 font-sans">
+        <ScrollReveal parallaxSpeed={0.10} delay={120} className="lg:col-span-7 space-y-6 font-sans">
           <div className="p-6 sm:p-8 rounded-2xl border border-zinc-800 bg-[#09090f] space-y-6">
             <div className="space-y-3">
               <span className="text-xs font-mono text-[#00f0ff] uppercase tracking-wider">
@@ -170,7 +171,7 @@ export const AboutSection: React.FC = () => {
               </div>
             </div>
           </div>
-        </div>
+        </ScrollReveal>
       </div>
     </section>
   )

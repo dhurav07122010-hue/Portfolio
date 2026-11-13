@@ -15,6 +15,7 @@ import {
 import { sound } from '../utils/soundEngine'
 import { TiltCard } from './TiltCard'
 import { ScrambleText } from './ScrambleText'
+import { ScrollReveal } from './ScrollReveal'
 
 interface WorkSectionProps {
   onOpenParadiseModal: () => void
@@ -61,7 +62,7 @@ export const WorkSection: React.FC<WorkSectionProps> = ({
   return (
     <section id="work" className="relative py-28 px-4 md:px-8 max-w-7xl mx-auto z-10 space-y-16">
       {/* Section Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/10 pb-6">
+      <ScrollReveal parallaxSpeed={-0.08} className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/10 pb-6">
         <div className="space-y-2">
           <div className="flex items-center space-x-2 font-mono text-xs text-[#00f0ff] uppercase tracking-widest">
             <span className="w-2 h-2 rounded-full bg-[#00f0ff] animate-ping" />
@@ -75,13 +76,14 @@ export const WorkSection: React.FC<WorkSectionProps> = ({
           Commercial institutional deployments and high-converting marketing ecosystems engineered by{' '}
           <strong className="text-white">Dhurav (Age 16)</strong>.
         </div>
-      </div>
+      </ScrollReveal>
 
       {/* Flagship Project: Paradise Public School with Live Front Page Showcase */}
-      <TiltCard
-        intensity={4}
-        className="rounded-3xl border border-white/15 bg-gradient-to-b from-[#0e1017]/95 via-[#08080f]/98 to-[#040407]/98 overflow-hidden shadow-[0_0_80px_rgba(0,240,255,0.12)] group hover:border-[#00f0ff]/60 transition-all backdrop-blur-xl"
-      >
+      <ScrollReveal parallaxSpeed={0.06} tilt={true}>
+        <TiltCard
+          intensity={4}
+          className="rounded-3xl border border-white/15 bg-gradient-to-b from-[#0e1017]/95 via-[#08080f]/98 to-[#040407]/98 overflow-hidden shadow-[0_0_80px_rgba(0,240,255,0.12)] group hover:border-[#00f0ff]/60 transition-all backdrop-blur-xl"
+        >
         {/* Subtle Ambient Glow */}
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-br from-[#00f0ff]/10 to-purple-600/10 rounded-full blur-3xl pointer-events-none group-hover:scale-125 transition-transform duration-700" />
 
@@ -373,87 +375,90 @@ export const WorkSection: React.FC<WorkSectionProps> = ({
           </div>
         </div>
       </TiltCard>
+      </ScrollReveal>
 
       {/* Secondary Project Cards: Nexus Performance & CyberPulse SEO */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {/* Project 2: Performance Ad Suite */}
-        <TiltCard
-          intensity={8}
-          className="rounded-3xl border border-white/10 bg-[#09090f]/90 p-8 sm:p-10 space-y-5 hover:border-purple-500/50 transition-all group backdrop-blur-xl"
-        >
-          <div className="flex items-center justify-between font-mono text-xs">
-            <span className="text-purple-400 font-bold flex items-center space-x-1.5 tracking-wider">
-              <TrendingUp className="w-4 h-4" />
-              <span>[02] PERFORMANCE AD ARCHITECTURE</span>
-            </span>
-            <span className="text-zinc-500">IICS LAB</span>
-          </div>
+      <ScrollReveal parallaxSpeed={0.10} delay={100}>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* Project 2: Performance Ad Suite */}
+          <TiltCard
+            intensity={8}
+            className="rounded-3xl border border-white/10 bg-[#09090f]/90 p-8 sm:p-10 space-y-5 hover:border-purple-500/50 transition-all group backdrop-blur-xl"
+          >
+            <div className="flex items-center justify-between font-mono text-xs">
+              <span className="text-purple-400 font-bold flex items-center space-x-1.5 tracking-wider">
+                <TrendingUp className="w-4 h-4" />
+                <span>[02] PERFORMANCE AD ARCHITECTURE</span>
+              </span>
+              <span className="text-zinc-500">IICS LAB</span>
+            </div>
 
-          <h4 className="font-['Syne'] font-black text-2xl sm:text-3xl text-white group-hover:text-purple-300 transition-colors uppercase">
-            Nexus Performance & Meta Ads Funnel
-          </h4>
+            <h4 className="font-['Syne'] font-black text-2xl sm:text-3xl text-white group-hover:text-purple-300 transition-colors uppercase">
+              Nexus Performance & Meta Ads Funnel
+            </h4>
 
-          <p className="text-sm text-zinc-400 font-sans leading-relaxed">
-            Engineered full-funnel paid acquisition architecture utilizing Meta Advantage+ Campaigns, CBO budgeting, programmatic video creative hooks, and server-side Conversions API (CAPI) to eliminate attribution loss.
-          </p>
+            <p className="text-sm text-zinc-400 font-sans leading-relaxed">
+              Engineered full-funnel paid acquisition architecture utilizing Meta Advantage+ Campaigns, CBO budgeting, programmatic video creative hooks, and server-side Conversions API (CAPI) to eliminate attribution loss.
+            </p>
 
-          <div className="flex flex-wrap gap-2 font-mono text-[11px] pt-2">
-            <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-zinc-300">Meta Ads Manager</span>
-            <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-zinc-300">Google Ads Search</span>
-            <span className="px-3 py-1 rounded-full bg-purple-500/10 text-purple-300 border border-purple-500/20">ROAS 4.2x Benchmark</span>
-          </div>
+            <div className="flex flex-wrap gap-2 font-mono text-[11px] pt-2">
+              <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-zinc-300">Meta Ads Manager</span>
+              <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-zinc-300">Google Ads Search</span>
+              <span className="px-3 py-1 rounded-full bg-purple-500/10 text-purple-300 border border-purple-500/20">ROAS 4.2x Benchmark</span>
+            </div>
 
-          <div className="pt-4 border-t border-white/10 flex items-center justify-between font-mono text-xs text-zinc-400">
-            <button
-              onClick={() => triggerOpenFrontPage('nexus')}
-              className="text-purple-400 hover:text-white flex items-center space-x-1 cursor-pointer"
-            >
-              <span>INSPECT ARCHITECTURE</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </button>
-            <span className="text-purple-400 font-medium">Verified CBO Framework</span>
-          </div>
-        </TiltCard>
+            <div className="pt-4 border-t border-white/10 flex items-center justify-between font-mono text-xs text-zinc-400">
+              <button
+                onClick={() => triggerOpenFrontPage('nexus')}
+                className="text-purple-400 hover:text-white flex items-center space-x-1 cursor-pointer"
+              >
+                <span>INSPECT ARCHITECTURE</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+              <span className="text-purple-400 font-medium">Verified CBO Framework</span>
+            </div>
+          </TiltCard>
 
-        {/* Project 3: Cyberpulse SEO Engine */}
-        <TiltCard
-          intensity={8}
-          className="rounded-3xl border border-white/10 bg-[#09090f]/90 p-8 sm:p-10 space-y-5 hover:border-emerald-500/50 transition-all group backdrop-blur-xl"
-        >
-          <div className="flex items-center justify-between font-mono text-xs">
-            <span className="text-emerald-400 font-bold flex items-center space-x-1.5 tracking-wider">
-              <Cpu className="w-4 h-4" />
-              <span>[03] PROGRAMMATIC ORGANIC SEO</span>
-            </span>
-            <span className="text-zinc-500">IICS LAB</span>
-          </div>
+          {/* Project 3: Cyberpulse SEO Engine */}
+          <TiltCard
+            intensity={8}
+            className="rounded-3xl border border-white/10 bg-[#09090f]/90 p-8 sm:p-10 space-y-5 hover:border-emerald-500/50 transition-all group backdrop-blur-xl"
+          >
+            <div className="flex items-center justify-between font-mono text-xs">
+              <span className="text-emerald-400 font-bold flex items-center space-x-1.5 tracking-wider">
+                <Cpu className="w-4 h-4" />
+                <span>[03] PROGRAMMATIC ORGANIC SEO</span>
+              </span>
+              <span className="text-zinc-500">IICS LAB</span>
+            </div>
 
-          <h4 className="font-['Syne'] font-black text-2xl sm:text-3xl text-white group-hover:text-emerald-300 transition-colors uppercase">
-            CyberPulse SEO & Keyword Dominance
-          </h4>
+            <h4 className="font-['Syne'] font-black text-2xl sm:text-3xl text-white group-hover:text-emerald-300 transition-colors uppercase">
+              CyberPulse SEO & Keyword Dominance
+            </h4>
 
-          <p className="text-sm text-zinc-400 font-sans leading-relaxed">
-            Automated organic ranking system developed during Dhurav's training at IICS Yamuna Vihar. Focuses on entity SEO, structured JSON-LD schemas, high-intent localized search queries, and content clusters that capture zero-click Google snippets.
-          </p>
+            <p className="text-sm text-zinc-400 font-sans leading-relaxed">
+              Automated organic ranking system developed during Dhurav's training at IICS Yamuna Vihar. Focuses on entity SEO, structured JSON-LD schemas, high-intent localized search queries, and content clusters that capture zero-click Google snippets.
+            </p>
 
-          <div className="flex flex-wrap gap-2 font-mono text-[11px] pt-2">
-            <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-zinc-300">Semrush Auditing</span>
-            <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-zinc-300">Google Search Console</span>
-            <span className="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Local 3-Pack</span>
-          </div>
+            <div className="flex flex-wrap gap-2 font-mono text-[11px] pt-2">
+              <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-zinc-300">Semrush Auditing</span>
+              <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-zinc-300">Google Search Console</span>
+              <span className="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Local 3-Pack</span>
+            </div>
 
-          <div className="pt-4 border-t border-white/10 flex items-center justify-between font-mono text-xs text-zinc-400">
-            <button
-              onClick={() => triggerOpenFrontPage('cyberpulse')}
-              className="text-emerald-400 hover:text-white flex items-center space-x-1 cursor-pointer"
-            >
-              <span>INSPECT ARCHITECTURE</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </button>
-            <span className="text-emerald-400 font-medium">+280% Impressions</span>
-          </div>
-        </TiltCard>
-      </div>
+            <div className="pt-4 border-t border-white/10 flex items-center justify-between font-mono text-xs text-zinc-400">
+              <button
+                onClick={() => triggerOpenFrontPage('cyberpulse')}
+                className="text-emerald-400 hover:text-white flex items-center space-x-1 cursor-pointer"
+              >
+                <span>INSPECT ARCHITECTURE</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+              <span className="text-emerald-400 font-medium">+280% Impressions</span>
+            </div>
+          </TiltCard>
+        </div>
+      </ScrollReveal>
     </section>
   )
 }

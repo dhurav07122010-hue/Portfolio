@@ -6,7 +6,6 @@ import { PortfolioFrame } from './components/PortfolioFrame'
 import { PortfolioMenuOverlay } from './components/PortfolioMenuOverlay'
 import { HeroSection } from './components/HeroSection'
 import { WorkSection } from './components/WorkSection'
-import { InteractiveLabSection } from './components/InteractiveLabSection'
 import { MarketingSection } from './components/MarketingSection'
 import { AboutSection } from './components/AboutSection'
 import { ContactSection } from './components/ContactSection'
@@ -121,9 +120,6 @@ export const App: React.FC = () => {
           onOpenParadiseModal={handleOpenParadiseModal}
           onOpenFrontPageModal={handleOpenFrontPageModal}
         />
-
-        {/* Part 02: Interactive 3D Cyber Lab, Audio Synthesizer & Web Vitals (Different Stuff!) */}
-        <InteractiveLabSection />
 
         {/* Reverse Kinetic Marquee 2 */}
         <KineticMarquee

@@ -2,12 +2,13 @@ import React from 'react'
 import { Target, BarChart3, Search, Zap } from 'lucide-react'
 import { TiltCard } from './TiltCard'
 import { ScrambleText } from './ScrambleText'
+import { ScrollReveal } from './ScrollReveal'
 
 export const MarketingSection: React.FC = () => {
   return (
     <section id="marketing" className="relative py-24 px-4 md:px-8 max-w-7xl mx-auto z-10 space-y-16">
       {/* Section Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-zinc-800/80 pb-6">
+      <ScrollReveal parallaxSpeed={-0.08} className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-zinc-800/80 pb-6">
         <div className="space-y-2">
           <div className="flex items-center space-x-2 font-mono text-xs text-purple-400 uppercase tracking-wider">
             <span className="w-2 h-2 rounded-full bg-purple-400 animate-ping" />
@@ -21,10 +22,11 @@ export const MarketingSection: React.FC = () => {
           Curriculum & practical applications developed while pursuing the Digital Marketing Course at{' '}
           <strong className="text-white">IICS Yamuna Vihar</strong>.
         </div>
-      </div>
+      </ScrollReveal>
 
       {/* 4 Pillars Grid with 3D Tilt */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <ScrollReveal parallaxSpeed={0.06} tilt={true}>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {/* Pillar 1 */}
         <TiltCard
           intensity={14}
@@ -109,34 +111,37 @@ export const MarketingSection: React.FC = () => {
           </div>
         </TiltCard>
       </div>
+      </ScrollReveal>
 
       {/* Strategic Institutional Marketing Callout */}
-      <div className="p-6 sm:p-8 rounded-2xl border border-zinc-800 bg-[#09090f] flex flex-col md:flex-row items-center justify-between gap-6">
-        <div className="space-y-2">
-          <div className="text-xs font-mono text-[#00f0ff] uppercase tracking-wider flex items-center space-x-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#00f0ff]" />
-            <span>IICS YAMUNA VIHAR PRACTICAL CURRICULUM</span>
+      <ScrollReveal parallaxSpeed={0.10} delay={120}>
+        <div className="p-6 sm:p-8 rounded-2xl border border-zinc-800 bg-[#09090f] flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="space-y-2">
+            <div className="text-xs font-mono text-[#00f0ff] uppercase tracking-wider flex items-center space-x-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#00f0ff]" />
+              <span>IICS YAMUNA VIHAR PRACTICAL CURRICULUM</span>
+            </div>
+            <h4 className="font-['Syne'] font-bold text-xl sm:text-2xl text-white">
+              From Search Intent to Admissions & Revenue
+            </h4>
+            <p className="text-xs text-zinc-400 max-w-2xl leading-relaxed font-sans">
+              Every campaign framework is designed with end-to-end attribution: from keyword research and ad creative testing to landing page conversion rate optimization and CRM synchronization.
+            </p>
           </div>
-          <h4 className="font-['Syne'] font-bold text-xl sm:text-2xl text-white">
-            From Search Intent to Admissions & Revenue
-          </h4>
-          <p className="text-xs text-zinc-400 max-w-2xl leading-relaxed font-sans">
-            Every campaign framework is designed with end-to-end attribution: from keyword research and ad creative testing to landing page conversion rate optimization and CRM synchronization.
-          </p>
-        </div>
 
-        <div className="flex items-center space-x-6 font-mono text-center shrink-0">
-          <div className="space-y-0.5">
-            <div className="text-2xl font-['Syne'] font-black text-[#00f0ff]">ROAS 4.2x</div>
-            <div className="text-[10px] text-zinc-500 uppercase">Paid Target</div>
-          </div>
-          <div className="w-[1px] h-8 bg-zinc-800" />
-          <div className="space-y-0.5">
-            <div className="text-2xl font-['Syne'] font-black text-emerald-400">99.8%</div>
-            <div className="text-[10px] text-zinc-500 uppercase">CAPI Reliability</div>
+          <div className="flex items-center space-x-6 font-mono text-center shrink-0">
+            <div className="space-y-0.5">
+              <div className="text-2xl font-['Syne'] font-black text-[#00f0ff]">ROAS 4.2x</div>
+              <div className="text-[10px] text-zinc-500 uppercase">Paid Target</div>
+            </div>
+            <div className="w-[1px] h-8 bg-zinc-800" />
+            <div className="space-y-0.5">
+              <div className="text-2xl font-['Syne'] font-black text-emerald-400">99.8%</div>
+              <div className="text-[10px] text-zinc-500 uppercase">CAPI Reliability</div>
+            </div>
           </div>
         </div>
-      </div>
+      </ScrollReveal>
     </section>
   )
 }

@@ -134,13 +134,6 @@ export const PortfolioFrame: React.FC<PortfolioFrameProps> = ({
               WORK
             </button>
             <button
-              onClick={() => handleNavClick('lab')}
-              onMouseEnter={() => sound.hoverBeep()}
-              className="hover:text-[#00f0ff] transition-colors cursor-pointer"
-            >
-              LAB
-            </button>
-            <button
               onClick={() => handleNavClick('marketing')}
               onMouseEnter={() => sound.hoverBeep()}
               className="hover:text-[#00f0ff] transition-colors cursor-pointer"

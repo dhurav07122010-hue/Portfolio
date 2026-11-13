@@ -82,29 +82,11 @@ export const PortfolioMenuOverlay: React.FC<PortfolioMenuOverlayProps> = ({
           {/* Item 2 */}
           <div className="group flex items-center justify-between border-b border-white/5 py-3 md:py-5 cursor-pointer">
             <button
-              onClick={() => handleNav('lab')}
-              onMouseEnter={() => sound.hoverBeep()}
-              className="text-left flex items-baseline space-x-4 md:space-x-8"
-            >
-              <span className="text-xs md:text-sm text-cyan-400 font-bold">[02]</span>
-              <span className="font-['Syne'] font-black text-3xl sm:text-5xl md:text-7xl text-white group-hover:text-[#00f0ff] group-hover:translate-x-3 transition-all tracking-tight uppercase">
-                <ScrambleText text="CYBER LAB" />
-              </span>
-            </button>
-            <div className="hidden sm:flex items-center space-x-3 text-xs text-zinc-400">
-              <span>3D Engine & Synthesizer</span>
-              <ArrowRight className="w-4 h-4 text-[#00f0ff] group-hover:translate-x-1 transition-transform" />
-            </div>
-          </div>
-
-          {/* Item 3 */}
-          <div className="group flex items-center justify-between border-b border-white/5 py-3 md:py-5 cursor-pointer">
-            <button
               onClick={() => handleNav('marketing')}
               onMouseEnter={() => sound.hoverBeep()}
               className="text-left flex items-baseline space-x-4 md:space-x-8"
             >
-              <span className="text-xs md:text-sm text-purple-400 font-bold">[03]</span>
+              <span className="text-xs md:text-sm text-purple-400 font-bold">[02]</span>
               <span className="font-['Syne'] font-black text-3xl sm:text-5xl md:text-7xl text-white group-hover:text-purple-300 group-hover:translate-x-3 transition-all tracking-tight uppercase">
                 <ScrambleText text="DIGITAL MARKETING" />
               </span>
@@ -115,14 +97,14 @@ export const PortfolioMenuOverlay: React.FC<PortfolioMenuOverlayProps> = ({
             </div>
           </div>
 
-          {/* Item 4 */}
+          {/* Item 3 */}
           <div className="group flex items-center justify-between border-b border-white/5 py-3 md:py-5 cursor-pointer">
             <button
               onClick={() => handleNav('about')}
               onMouseEnter={() => sound.hoverBeep()}
               className="text-left flex items-baseline space-x-4 md:space-x-8"
             >
-              <span className="text-xs md:text-sm text-yellow-400 font-bold">[04]</span>
+              <span className="text-xs md:text-sm text-yellow-400 font-bold">[03]</span>
               <span className="font-['Syne'] font-black text-3xl sm:text-5xl md:text-7xl text-white group-hover:text-yellow-300 group-hover:translate-x-3 transition-all tracking-tight uppercase">
                 <ScrambleText text="PROFILE & DOSSIER" />
               </span>
@@ -133,14 +115,14 @@ export const PortfolioMenuOverlay: React.FC<PortfolioMenuOverlayProps> = ({
             </div>
           </div>
 
-          {/* Item 5 */}
+          {/* Item 4 */}
           <div className="group flex items-center justify-between border-b border-white/5 py-3 md:py-5 cursor-pointer">
             <button
               onClick={() => handleNav('contact')}
               onMouseEnter={() => sound.hoverBeep()}
               className="text-left flex items-baseline space-x-4 md:space-x-8"
             >
-              <span className="text-xs md:text-sm text-emerald-400 font-bold">[05]</span>
+              <span className="text-xs md:text-sm text-emerald-400 font-bold">[04]</span>
               <span className="font-['Syne'] font-black text-3xl sm:text-5xl md:text-7xl text-white group-hover:text-emerald-300 group-hover:translate-x-3 transition-all tracking-tight uppercase">
                 <ScrambleText text="COMMISSION WORK" />
               </span>

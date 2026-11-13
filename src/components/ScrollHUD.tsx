@@ -3,12 +3,11 @@ import { scrollEngine } from '../utils/scrollEngine'
 import { sound } from '../utils/soundEngine'
 
 const SECTIONS = [
-  { id: 'hero', label: '00 // HERO', min: 0, max: 0.15 },
-  { id: 'work', label: '01 // WORK', min: 0.15, max: 0.38 },
-  { id: 'lab', label: '02 // LAB', min: 0.38, max: 0.58 },
-  { id: 'marketing', label: '03 // MARKETING', min: 0.58, max: 0.78 },
-  { id: 'about', label: '04 // ABOUT', min: 0.78, max: 0.90 },
-  { id: 'contact', label: '05 // CONTACT', min: 0.90, max: 1.0 },
+  { id: 'hero', label: '00 // HERO', min: 0, max: 0.22 },
+  { id: 'work', label: '01 // WORK', min: 0.22, max: 0.52 },
+  { id: 'marketing', label: '02 // MARKETING', min: 0.52, max: 0.74 },
+  { id: 'about', label: '03 // ABOUT', min: 0.74, max: 0.88 },
+  { id: 'contact', label: '04 // CONTACT', min: 0.88, max: 1.0 },
 ]
 
 export const ScrollHUD: React.FC = () => {

@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Mail, MapPin, Send, CheckCircle2, MessageSquare, Sparkles } from 'lucide-react'
 import { sound } from '../utils/soundEngine'
+import { ScrollReveal } from './ScrollReveal'
 
 export const ContactSection: React.FC = () => {
   const [formSubmitted, setFormSubmitted] = useState(false)
@@ -21,7 +22,7 @@ export const ContactSection: React.FC = () => {
   return (
     <section id="contact" className="relative py-24 px-4 md:px-8 max-w-7xl mx-auto z-10 space-y-16">
       {/* Section Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-zinc-800/80 pb-6">
+      <ScrollReveal parallaxSpeed={-0.08} className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-zinc-800/80 pb-6">
         <div className="space-y-2">
           <div className="flex items-center space-x-2 font-mono text-xs text-[#00f0ff] uppercase tracking-wider">
             <span>[04] // COMMENCE TRANSMISSION</span>
@@ -33,11 +34,11 @@ export const ContactSection: React.FC = () => {
         <div className="font-mono text-xs text-zinc-400 max-w-md">
           Available for digital marketing campaigns, institutional SEO overhauls, and next-gen web platforms.
         </div>
-      </div>
+      </ScrollReveal>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         {/* Left Column: Direct Info */}
-        <div className="lg:col-span-5 space-y-6">
+        <ScrollReveal parallaxSpeed={0.06} tilt={true} className="lg:col-span-5 space-y-6">
           <div className="p-6 sm:p-8 rounded-2xl border border-zinc-800 bg-[#09090f] space-y-6">
             <div className="space-y-2">
               <span className="text-xs font-mono text-zinc-500 uppercase">DIRECT COORDINATES</span>
@@ -99,10 +100,10 @@ export const ContactSection: React.FC = () => {
               </p>
             </div>
           </div>
-        </div>
+        </ScrollReveal>
 
         {/* Right Column: High-Tech Contact Form */}
-        <div className="lg:col-span-7">
+        <ScrollReveal parallaxSpeed={0.10} delay={120} className="lg:col-span-7">
           <div className="p-6 sm:p-8 rounded-2xl border border-zinc-800 bg-[#09090f] shadow-2xl relative overflow-hidden">
             {/* Ambient Corner Glow */}
             <div className="absolute top-0 right-0 w-64 h-64 bg-[#00f0ff]/5 rounded-full blur-2xl pointer-events-none" />
@@ -200,35 +201,37 @@ export const ContactSection: React.FC = () => {
               </form>
             )}
           </div>
-        </div>
+        </ScrollReveal>
       </div>
 
       {/* Footer */}
-      <footer className="pt-12 border-t border-zinc-800/80 flex flex-col md:flex-row items-center justify-between gap-4 font-mono text-xs text-zinc-500">
-        <div className="flex items-center space-x-2">
-          <span className="font-['Syne'] font-bold text-white text-sm">DHURAV</span>
-          <span>© 2026 // ALL RIGHTS RESERVED</span>
-        </div>
+      <ScrollReveal parallaxSpeed={0.04}>
+        <footer className="pt-12 border-t border-zinc-800/80 flex flex-col md:flex-row items-center justify-between gap-4 font-mono text-xs text-zinc-500">
+          <div className="flex items-center space-x-2">
+            <span className="font-['Syne'] font-bold text-white text-sm">DHURAV</span>
+            <span>© 2026 // ALL RIGHTS RESERVED</span>
+          </div>
 
-        <div className="flex items-center space-x-4 text-[11px]">
-          <span>AGE: 16</span>
-          <span>•</span>
-          <span>IICS YAMUNA VIHAR</span>
-          <span>•</span>
-          <a
-            href="https://paradisepublicschool.com"
-            target="_blank"
-            rel="noreferrer"
-            className="text-zinc-400 hover:text-[#00f0ff] transition-colors"
-          >
-            PARADISEPUBLICSHOOL.COM
-          </a>
-        </div>
+          <div className="flex items-center space-x-4 text-[11px]">
+            <span>AGE: 16</span>
+            <span>•</span>
+            <span>IICS YAMUNA VIHAR</span>
+            <span>•</span>
+            <a
+              href="https://paradisepublicschool.com"
+              target="_blank"
+              rel="noreferrer"
+              className="text-zinc-400 hover:text-[#00f0ff] transition-colors"
+            >
+              PARADISEPUBLICSHOOL.COM
+            </a>
+          </div>
 
-        <div className="text-[10px] text-zinc-600">
-          ENGINEERED & CRAFTED BY DHURAV
-        </div>
-      </footer>
+          <div className="text-[10px] text-zinc-600">
+            ENGINEERED & CRAFTED BY DHURAV
+          </div>
+        </footer>
+      </ScrollReveal>
     </section>
   )
 }

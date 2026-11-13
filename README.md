@@ -11,7 +11,7 @@ A cutting-edge, scroll-based 3D digital portfolio designed and engineered by **D
 2. **Scroll-Driven 3D WebGL Engine**: 46-segment articulated cyber spine, dynamic camera flythrough along Catmull-Rom spline, interactive particle field, and hyperdrive warp speeds.
 3. **Interactive Cursor Hover Particles**: Dynamic luminous particle trails, constellation connection lines, ambient dust repelled by pointer, and hover aura bursts.
 4. **Interactive Project Front Page Showcase**: When visitors check work, the full interactive front page of [paradisepublicschool.com](https://paradisepublicschool.com) appears in a responsive browser mockup with Desktop, Tablet, and Mobile viewport options.
-5. **Interactive 3D Cyber Lab & Synthesizer**: Real-time WebGL engine physics controllers, live Web Audio oscilloscope waveform visualizer, and Core Web Vitals telemetry benchmarks.
+5. **Cinematic Scroll Animations**: Custom ScrollReveal engine with 3D perspective tilt, parallax layering, velocity-accelerated kinetic marquees, and dynamic Three.js camera FOV/streaks linked directly to scroll velocity.
 6. **Web Audio Synthesizer**: Procedural sci-fi UI clicks, frequency ramps, and ambient sound harmonics using the native browser Web Audio API.
 7. **HUD Perimeter Navigation**: Real-time IST clock, Delhi coordinates (`28.69° N, 77.27° E`), live depth tracker, velocity meter, and interactive CLI terminal emulator (`HUD_CLI`).
 8. **Student Dossier**: Highlighting **Dhurav (Age 16)**, pursuing the **Digital Marketing Course at IICS Yamuna Vihar** (Indian Institute of Computer Science), bridging performance marketing with cutting-edge web development.

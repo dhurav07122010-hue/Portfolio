@@ -3,6 +3,7 @@ import { ArrowUpRight, Terminal, Zap, Activity, Eye } from 'lucide-react'
 import { sound } from '../utils/soundEngine'
 import { scrollEngine } from '../utils/scrollEngine'
 import { ScrambleText } from './ScrambleText'
+import { ScrollReveal } from './ScrollReveal'
 
 interface HeroSectionProps {
   onOpenParadiseModal: () => void
@@ -55,8 +56,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         </div>
       </div>
 
-      {/* Main Massive Kinetic Title */}
-      <div className="my-auto py-10 md:py-16 select-none relative">
+      {/* Main Massive Kinetic Title with Scroll-Driven Depth */}
+      <ScrollReveal parallaxSpeed={-0.14} tilt={true} className="my-auto py-10 md:py-16 select-none relative">
         {/* Holographic Framing Brackets */}
         <div className="absolute -top-4 -left-4 w-6 h-6 border-t-2 border-l-2 border-[#00f0ff]/50 pointer-events-none" />
         <div className="absolute -bottom-4 -right-4 w-6 h-6 border-b-2 border-r-2 border-[#00f0ff]/50 pointer-events-none" />
@@ -124,7 +125,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             </div>
           </div>
         </div>
-      </div>
+      </ScrollReveal>
 
       {/* Bottom Live Metrics / HUD Bar with Pulsing Indicators */}
       <div className="pt-8 border-t border-zinc-800/80 grid grid-cols-2 sm:grid-cols-4 gap-4 font-mono text-xs">
