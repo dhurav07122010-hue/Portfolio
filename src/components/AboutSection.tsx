@@ -68,9 +68,12 @@ export const AboutSection: React.FC = () => {
               <div className="flex items-center justify-between">
                 <span className="text-zinc-500 flex items-center space-x-1.5">
                   <Award className="w-4 h-4 text-yellow-400" />
-                  <span>Key Project</span>
+                  <span>Key Deployments</span>
                 </span>
-                <span className="text-emerald-400 font-semibold">paradisepublicschool.com</span>
+                <span className="text-right text-[11px] font-mono">
+                  <span className="text-emerald-400 font-semibold block">paradisepublicschool.com</span>
+                  <span className="text-[#fb7185] font-semibold block">virgovisor.com</span>
+                </span>
               </div>
             </div>
 
@@ -105,7 +108,7 @@ export const AboutSection: React.FC = () => {
                 Most agencies produce generic cookie-cutter WordPress websites with bland templates that fail to capture the modern consumer's attention. Rejecting low-effort commodity design, I engineer bespoke digital experiences that fuse pitch-black cinematic atmospheres, real-time 3D WebGL interactions, and algorithmic digital marketing funnels.
               </p>
               <p className="text-sm text-zinc-400 leading-relaxed">
-                Currently studying <strong className="text-purple-300">Digital Marketing at IICS Yamuna Vihar</strong>, I master the science of customer acquisition: Search Engine Optimization (SEO), Meta & Google Paid Ads, Conversion Rate Optimization (CRO), and full-funnel analytics. When applied to real institutions like <strong className="text-white">Paradise Public School</strong>, this hybrid skill set transforms standard digital presence into exponential growth.
+                Currently studying <strong className="text-purple-300">Digital Marketing at IICS Yamuna Vihar</strong>, I master the science of customer acquisition: Search Engine Optimization (SEO), Meta & Google Paid Ads, Conversion Rate Optimization (CRO), and full-funnel analytics. When applied to real institutions like <strong className="text-white">Paradise Public School</strong> and D2C brands like <strong className="text-[#fb7185]">Virgo Visor</strong>, this hybrid skill set transforms standard digital presence into exponential growth.
               </p>
             </div>
 

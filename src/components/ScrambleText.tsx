@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
 
 interface ScrambleTextProps {
   text: string
@@ -21,7 +21,7 @@ export const ScrambleText: React.FC<ScrambleTextProps> = ({
   const isScramblingRef = useRef(false)
   const intervalRef = useRef<number | null>(null)
 
-  const scramble = () => {
+  const scramble = useCallback(() => {
     if (isScramblingRef.current) return
     isScramblingRef.current = true
 
@@ -49,14 +49,14 @@ export const ScrambleText: React.FC<ScrambleTextProps> = ({
 
       iteration += 1 / 2
     }, speed)
-  }
+  }, [text, speed])
 
   useEffect(() => {
     scramble()
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current)
     }
-  }, [text])
+  }, [scramble])
 
   return (
     <Component

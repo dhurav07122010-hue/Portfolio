@@ -25,7 +25,7 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose, o
           </p>
           <p>Operator: <span className="text-white font-bold">Dhurav</span> (Age: 16)</p>
           <p>Affiliation: <span className="text-white">IICS Yamuna Vihar</span> (Digital Marketing Specialization)</p>
-          <p>Key Showcase: <span className="text-emerald-400 font-bold">paradisepublicschool.com</span></p>
+          <p>Key Showcases: <span className="text-emerald-400 font-bold">paradisepublicschool.com</span> & <span className="text-[#fb7185] font-bold">virgovisor.com</span></p>
           <p className="text-zinc-500 mt-2">
             Type <span className="text-[#00f0ff] font-bold">help</span> to view available system commands.
           </p>
@@ -62,6 +62,7 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose, o
               <div><span className="text-purple-400 font-semibold">dhruv</span> - Profile dossier & background</div>
               <div><span className="text-purple-400 font-semibold">iics</span> - IICS Yamuna Vihar course details</div>
               <div><span className="text-purple-400 font-semibold">paradise</span> - Inspect paradisepublicschool.com</div>
+              <div><span className="text-purple-400 font-semibold">virgovisor</span> - Inspect virgovisor.com D2C store</div>
               <div><span className="text-purple-400 font-semibold">marketing</span> - Digital marketing skill breakdown</div>
               <div><span className="text-purple-400 font-semibold">sound</span> - Toggle audio synthesizer</div>
               <div><span className="text-purple-400 font-semibold">contact</span> - Contact & collaboration info</div>
@@ -79,7 +80,7 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose, o
             <p>• Location: <span className="text-zinc-200">Yamuna Vihar, Delhi, India</span></p>
             <p>• Specialty: <span className="text-emerald-400 font-semibold">Growth Marketer, Performance Ads & Interactive Web Specialist</span></p>
             <p>• Currently Enrolled: <span className="text-purple-300 font-semibold">Digital Marketing Course @ IICS Yamuna Vihar</span></p>
-            <p>• Flagship Production: <span className="text-[#00f0ff]">paradisepublicschool.com</span></p>
+            <p>• Flagship Productions: <span className="text-[#00f0ff]">paradisepublicschool.com</span> & <span className="text-[#fb7185]">virgovisor.com</span></p>
           </div>
         )
         break
@@ -114,6 +115,24 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose, o
         )
         if (onSelectProject) {
           onSelectProject('paradise')
+        }
+        break
+
+      case 'virgovisor':
+        output = (
+          <div className="space-y-1.5 text-zinc-300 border-l-2 border-[#e11d48] pl-3 py-1">
+            <p className="text-[#fb7185] font-bold text-sm">PROJECT: VIRGO VISOR (VISHNU ENTERPRISES)</p>
+            <p>Live Store: <a href="https://virgovisor.com" target="_blank" rel="noreferrer" className="text-[#00f0ff] underline">https://virgovisor.com</a></p>
+            <p>Role: Lead D2C E-Commerce Growth Architect & Performance Marketing</p>
+            <p className="text-zinc-400">Achievements:</p>
+            <p>✓ +480% monthly revenue growth via high-converting D2C funnel</p>
+            <p>✓ 5.1x blended ROAS across Meta & Google Shopping campaigns</p>
+            <p>✓ 4.8% e-commerce conversion rate with instant UPI & COD integrations</p>
+            <p>✓ National catalog coverage: Vega, Steelbird, Studds, and LS2 helmet visors</p>
+          </div>
+        )
+        if (onSelectProject) {
+          onSelectProject('virgovisor')
         }
         break
 

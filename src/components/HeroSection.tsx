@@ -49,9 +49,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           <span className="px-2.5 py-0.5 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-300">
             STUDENT @ <strong className="text-white">IICS YAMUNA VIHAR</strong>
           </span>
-          <span className="hidden sm:inline-flex items-center space-x-1 px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400">
-            <span>LIVE WORK:</span>
+          <span className="hidden sm:inline-flex items-center space-x-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400">
+            <span>CLIENT DEPLOYMENTS:</span>
             <strong className="text-white">PARADISEPUBLICSHOOL.COM</strong>
+            <span className="text-zinc-500">•</span>
+            <strong className="text-[#fb7185]">VIRGOVISOR.COM</strong>
           </span>
         </div>
       </div>
@@ -82,7 +84,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 <span>Interactive WebGL</span>
               </h2>
               <p className="font-sans text-sm md:text-base text-zinc-400 leading-relaxed">
-                At <span className="text-white font-semibold">16 years old</span>, advancing through rigorous professional training in <span className="text-purple-300 font-semibold">Digital Marketing at IICS Yamuna Vihar</span>. Built and scaled the institutional admissions infrastructure for <span className="text-[#00f0ff] font-semibold underline underline-offset-4 decoration-[#00f0ff]/40">paradisepublicschool.com</span>, fusing algorithmic ROAS marketing with cinematic high-performance WebGL aesthetics.
+                At <span className="text-white font-semibold">16 years old</span>, advancing through rigorous professional training in <span className="text-purple-300 font-semibold">Digital Marketing at IICS Yamuna Vihar</span>. Architected client-facing platforms for <span className="text-[#00f0ff] font-semibold underline underline-offset-4 decoration-[#00f0ff]/40">paradisepublicschool.com</span> and <span className="text-[#fb7185] font-semibold underline underline-offset-4 decoration-[#fb7185]/40">virgovisor.com</span> (Vishnu Enterprises D2C), fusing algorithmic ROAS marketing with cinematic high-performance WebGL aesthetics.
               </p>
             </div>
 
@@ -142,22 +144,22 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
         <div className="space-y-1 p-3 rounded-lg bg-zinc-900/40 border border-zinc-800/60 hover:border-[#00f0ff]/40 transition-colors">
           <div className="text-zinc-500 text-[10px] flex items-center justify-between">
-            <span>PROVEN PRODUCTION</span>
+            <span>CLIENT PRODUCTIONS</span>
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
           </div>
-          <div className="text-[#00f0ff] font-semibold truncate">
-            paradisepublicschool.com
+          <div className="text-[#00f0ff] font-semibold truncate text-[11px]">
+            paradise • virgovisor.com
           </div>
-          <div className="text-[11px] text-zinc-400">School ERP & Admissions</div>
+          <div className="text-[10px] text-zinc-400">School ERP & D2C E-Com</div>
         </div>
 
         <div className="space-y-1 p-3 rounded-lg bg-zinc-900/40 border border-zinc-800/60 hover:border-[#00f0ff]/40 transition-colors">
           <div className="text-zinc-500 text-[10px] flex items-center justify-between">
-            <span>ADMISSIONS GROWTH</span>
+            <span>VERIFIED RESULTS</span>
             <span className="w-1.5 h-1.5 rounded-full bg-yellow-400 animate-ping" />
           </div>
-          <div className="text-emerald-400 font-semibold">+340% Enquiries</div>
-          <div className="text-[11px] text-zinc-400">#1 Local Search 3-Pack</div>
+          <div className="text-emerald-400 font-semibold">+340% Enq • 5.1x ROAS</div>
+          <div className="text-[10px] text-zinc-400">#1 Local Pack & D2C Scale</div>
         </div>
 
         <div className="space-y-1 p-3 rounded-lg bg-zinc-900/40 border border-zinc-800/60 hover:border-[#00f0ff]/40 transition-colors">

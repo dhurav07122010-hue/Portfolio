@@ -74,7 +74,7 @@ export const PortfolioMenuOverlay: React.FC<PortfolioMenuOverlayProps> = ({
               </span>
             </button>
             <div className="hidden sm:flex items-center space-x-3 text-xs text-zinc-400">
-              <span className="text-emerald-400 font-semibold">paradisepublicschool.com</span>
+              <span className="text-emerald-400 font-semibold">paradise • virgovisor.com</span>
               <ArrowRight className="w-4 h-4 text-[#00f0ff] group-hover:translate-x-1 transition-transform" />
             </div>
           </div>
@@ -145,6 +145,16 @@ export const PortfolioMenuOverlay: React.FC<PortfolioMenuOverlayProps> = ({
             className="hover:text-[#00f0ff] transition-colors flex items-center space-x-1.5"
           >
             <span>paradisepublicschool.com</span>
+            <ExternalLink className="w-3.5 h-3.5" />
+          </a>
+
+          <a
+            href="https://virgovisor.com"
+            target="_blank"
+            rel="noreferrer"
+            className="hover:text-[#fb7185] transition-colors flex items-center space-x-1.5"
+          >
+            <span>virgovisor.com</span>
             <ExternalLink className="w-3.5 h-3.5" />
           </a>
 

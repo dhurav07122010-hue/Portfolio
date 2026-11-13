@@ -106,7 +106,9 @@ export const App: React.FC = () => {
           items={[
             'DHURAV // AGE 16',
             'PARADISEPUBLICSHOOL.COM',
+            'VIRGOVISOR.COM // D2C',
             '+340% ADMISSION INQUIRIES',
+            '5.1X BLENDED ROAS',
             'DIGITAL MARKETING SPECIALIST',
             'IICS YAMUNA VIHAR',
             '3D KINETIC SPINE ENGINE',
@@ -126,6 +128,7 @@ export const App: React.FC = () => {
           reverse={true}
           items={[
             '100/100 CORE WEB VITALS',
+            'VIRGOVISOR.COM // VISHNU ENTERPRISES',
             'IICS YAMUNA VIHAR',
             'GROWTH ARCHITECT // DHURAV',
             'PARADISE PUBLIC SCHOOL',

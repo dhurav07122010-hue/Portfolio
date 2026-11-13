@@ -15,6 +15,8 @@ import {
   Phone,
   MapPin,
   Cpu,
+  Truck,
+  ShoppingBag,
 } from 'lucide-react'
 import { sound } from '../utils/soundEngine'
 import { PROJECTS_DATA } from '../data/projectsData'
@@ -423,6 +425,310 @@ export const ProjectFrontPageModal: React.FC<ProjectFrontPageModalProps> = ({
                       <p className="text-xs text-zinc-600 leading-relaxed">
                         Instilling discipline, mutual respect, civic integrity, and cultural consciousness from foundational years.
                       </p>
+                    </div>
+                  </div>
+                </section>
+              </div>
+            ) : selectedProjectId === 'virgovisor' ? (
+              /* High-Fidelity Front Page Simulator for virgovisor.com */
+              <div className="text-white font-sans bg-[#090a0f] select-text">
+                {/* 1. E-Commerce Free Delivery Announcement Ribbon */}
+                <div className="bg-[#e11d48] text-white py-2 px-4 text-[11px] font-mono flex items-center justify-between">
+                  <div className="flex items-center space-x-2">
+                    <Truck className="w-3.5 h-3.5 shrink-0" />
+                    <span className="font-bold tracking-wider">ALL-INDIA FREE COURIER DISPATCH:</span>
+                    <span className="hidden sm:inline text-white/90">Orders dispatched in &lt;24 hours via BlueDart / Delhivery</span>
+                  </div>
+                  <div className="flex items-center space-x-3 text-[10px]">
+                    <span className="bg-black/30 px-2 py-0.5 rounded font-bold">COD AVAILABLE</span>
+                    <span className="hidden md:inline bg-black/30 px-2 py-0.5 rounded">100% SCRATCH DEFENSE</span>
+                  </div>
+                </div>
+
+                {/* 2. D2C Store Navigation */}
+                <header className="bg-zinc-950/95 border-b border-zinc-800 px-4 sm:px-8 py-3.5 flex items-center justify-between sticky top-0 z-20 backdrop-blur-md">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#e11d48] to-[#9f1239] flex items-center justify-center font-black text-white text-base shadow-lg shadow-rose-900/40">
+                      V
+                    </div>
+                    <div>
+                      <div className="font-['Syne'] font-black text-lg text-white tracking-wider leading-tight flex items-center space-x-2">
+                        <span>VIRGO VISOR</span>
+                        <span className="text-[10px] px-1.5 py-0.5 rounded bg-[#e11d48]/20 text-[#fb7185] border border-[#e11d48]/30 font-mono">
+                          D2C
+                        </span>
+                      </div>
+                      <div className="text-[10px] text-zinc-400 font-mono">
+                        Official Store of Vishnu Enterprises • Delhi
+                      </div>
+                    </div>
+                  </div>
+
+                  <nav className="hidden lg:flex items-center space-x-6 text-xs font-mono font-medium text-zinc-400">
+                    <span className="text-[#fb7185] font-bold border-b border-[#e11d48] pb-0.5">CATALOG</span>
+                    <span className="hover:text-white cursor-pointer transition-colors">VEGA SERIES</span>
+                    <span className="hover:text-white cursor-pointer transition-colors">STEELBIRD SBA</span>
+                    <span className="hover:text-white cursor-pointer transition-colors">STUDDS NINJA</span>
+                    <span className="hover:text-white cursor-pointer transition-colors">LS2 STREAM</span>
+                    <span className="hover:text-white cursor-pointer transition-colors">PINLOCK ANTI-FOG</span>
+                  </nav>
+
+                  <div className="flex items-center space-x-3">
+                    <a
+                      href="https://virgovisor.com"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="px-4 py-2 rounded-xl bg-[#e11d48] hover:bg-[#f43f5e] text-white text-xs font-bold font-mono transition-all flex items-center space-x-1.5 shadow-lg shadow-rose-900/40"
+                    >
+                      <ShoppingBag className="w-3.5 h-3.5" />
+                      <span>ORDER ONLINE</span>
+                      <ExternalLink className="w-3 h-3 ml-0.5" />
+                    </a>
+                  </div>
+                </header>
+
+                {/* 3. Hero E-Commerce Showcase */}
+                <section className="relative py-12 px-4 sm:px-8 border-b border-zinc-800 bg-gradient-to-b from-zinc-950 via-[#0d0f17] to-zinc-950 space-y-6">
+                  <div className="max-w-4xl mx-auto text-center space-y-4">
+                    <div className="inline-flex items-center space-x-2 px-3.5 py-1 rounded-full bg-[#e11d48]/15 border border-[#e11d48]/40 text-[#fb7185] text-xs font-mono">
+                      <Sparkles className="w-3.5 h-3.5" />
+                      <span>PRECISION OPTICAL HELMET VISORS // DISPATCH IN 24H</span>
+                    </div>
+
+                    <h1 className="text-3xl sm:text-5xl md:text-6xl font-['Syne'] font-black text-white uppercase tracking-tight leading-tight">
+                      Zero Distortion. <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#fb7185] to-[#f43f5e]">Hard-Coat Scratch Armor.</span>
+                    </h1>
+
+                    <p className="text-sm sm:text-base text-zinc-300 max-w-2xl mx-auto leading-relaxed">
+                      Upgrade your riding vision with optical-grade replacement helmet visors engineered for Vega, Steelbird, Studds, and LS2 helmets. Factory direct pricing from Vishnu Enterprises.
+                    </p>
+
+                    <div className="flex flex-wrap items-center justify-center gap-3 pt-2 font-mono text-xs">
+                      <span className="px-3 py-1.5 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-300 flex items-center space-x-1.5">
+                        <ShieldCheck className="w-4 h-4 text-emerald-400" />
+                        <span>Hard-Coat Polycarbonate</span>
+                      </span>
+                      <span className="px-3 py-1.5 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-300 flex items-center space-x-1.5">
+                        <Sparkles className="w-4 h-4 text-[#00f0ff]" />
+                        <span>UV400 Optical Class 1</span>
+                      </span>
+                      <span className="px-3 py-1.5 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-300 flex items-center space-x-1.5">
+                        <Truck className="w-4 h-4 text-[#fb7185]" />
+                        <span>Fast Pan-India Express Delivery</span>
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* 4. Product Catalog Grid */}
+                  <div className="max-w-6xl mx-auto pt-8">
+                    <div className="flex items-center justify-between pb-4 border-b border-zinc-800/80 mb-6">
+                      <div className="font-['Syne'] font-black text-lg text-white uppercase tracking-wider flex items-center space-x-2">
+                        <span>FEATURED BESTSELLERS</span>
+                        <span className="text-xs font-mono text-zinc-500 font-normal">[4.9★ AVERAGE RATING]</span>
+                      </div>
+                      <div className="text-xs font-mono text-[#fb7185]">
+                        SHOWING 4 OF 48 MODELS
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                      {/* Product 1 */}
+                      <div className="p-4 rounded-2xl bg-zinc-900/90 border border-zinc-800 hover:border-[#e11d48] transition-all flex flex-col justify-between space-y-4 group">
+                        <div className="space-y-3">
+                          <div className="w-full h-36 rounded-xl bg-gradient-to-br from-zinc-800 to-zinc-900 border border-zinc-700/60 flex flex-col items-center justify-center p-3 relative overflow-hidden group-hover:scale-[1.02] transition-transform">
+                            <span className="absolute top-2 left-2 px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                              BESTSELLER
+                            </span>
+                            <div className="w-20 h-12 rounded-full border-2 border-white/40 flex items-center justify-center font-black text-zinc-400 text-xs tracking-wider">
+                              CLEAR
+                            </div>
+                            <span className="text-[10px] text-zinc-400 font-mono mt-2">
+                              99.2% Light Transmission
+                            </span>
+                          </div>
+
+                          <div className="space-y-1">
+                            <div className="text-[10px] font-mono text-[#fb7185] font-bold">VEGA COMPATIBLE</div>
+                            <h3 className="font-bold text-white text-sm">Vega Bolt / Crux Clear Visor</h3>
+                            <p className="text-xs text-zinc-400">Day & night crystal clarity with anti-glare multi-coat.</p>
+                          </div>
+                        </div>
+
+                        <div className="pt-2 border-t border-zinc-800 flex items-center justify-between">
+                          <div>
+                            <div className="text-base font-black text-[#fb7185] font-['Syne']">₹349</div>
+                            <div className="text-[10px] text-zinc-500 line-through">MRP ₹599 (41% OFF)</div>
+                          </div>
+                          <a
+                            href="https://virgovisor.com"
+                            target="_blank"
+                            rel="noreferrer"
+                            className="px-3 py-1.5 rounded-lg bg-[#e11d48] text-white font-mono text-xs font-bold hover:bg-[#f43f5e] transition-colors"
+                          >
+                            Buy Now
+                          </a>
+                        </div>
+                      </div>
+
+                      {/* Product 2 */}
+                      <div className="p-4 rounded-2xl bg-zinc-900/90 border border-zinc-800 hover:border-[#e11d48] transition-all flex flex-col justify-between space-y-4 group">
+                        <div className="space-y-3">
+                          <div className="w-full h-36 rounded-xl bg-gradient-to-br from-zinc-900 to-black border border-zinc-700/60 flex flex-col items-center justify-center p-3 relative overflow-hidden group-hover:scale-[1.02] transition-transform">
+                            <span className="absolute top-2 left-2 px-2 py-0.5 rounded text-[10px] font-mono bg-[#fb7185]/20 text-[#fb7185] border border-[#fb7185]/30">
+                              HOT CHOICE
+                            </span>
+                            <div className="w-20 h-12 rounded-full bg-zinc-950 border-2 border-zinc-600 flex items-center justify-center font-black text-zinc-300 text-xs tracking-wider">
+                              SMOKE
+                            </div>
+                            <span className="text-[10px] text-zinc-400 font-mono mt-2">
+                              Sun-Glare Neutralizer
+                            </span>
+                          </div>
+
+                          <div className="space-y-1">
+                            <div className="text-[10px] font-mono text-[#fb7185] font-bold">STEELBIRD COMPATIBLE</div>
+                            <h3 className="font-bold text-white text-sm">Steelbird SBA-2 Smoke Visor</h3>
+                            <p className="text-xs text-zinc-400">Deep charcoal tint for harsh sunlight and highway glare.</p>
+                          </div>
+                        </div>
+
+                        <div className="pt-2 border-t border-zinc-800 flex items-center justify-between">
+                          <div>
+                            <div className="text-base font-black text-[#fb7185] font-['Syne']">₹429</div>
+                            <div className="text-[10px] text-zinc-500 line-through">MRP ₹699 (38% OFF)</div>
+                          </div>
+                          <a
+                            href="https://virgovisor.com"
+                            target="_blank"
+                            rel="noreferrer"
+                            className="px-3 py-1.5 rounded-lg bg-[#e11d48] text-white font-mono text-xs font-bold hover:bg-[#f43f5e] transition-colors"
+                          >
+                            Buy Now
+                          </a>
+                        </div>
+                      </div>
+
+                      {/* Product 3 */}
+                      <div className="p-4 rounded-2xl bg-zinc-900/90 border border-zinc-800 hover:border-[#e11d48] transition-all flex flex-col justify-between space-y-4 group">
+                        <div className="space-y-3">
+                          <div className="w-full h-36 rounded-xl bg-gradient-to-br from-indigo-900/40 via-purple-900/40 to-rose-900/40 border border-zinc-700/60 flex flex-col items-center justify-center p-3 relative overflow-hidden group-hover:scale-[1.02] transition-transform">
+                            <span className="absolute top-2 left-2 px-2 py-0.5 rounded text-[10px] font-mono bg-purple-500/20 text-purple-300 border border-purple-500/30">
+                              IRIDIUM
+                            </span>
+                            <div className="w-20 h-12 rounded-full bg-gradient-to-r from-cyan-500/60 via-purple-500/60 to-rose-500/60 border-2 border-white/50 flex items-center justify-center font-black text-white text-xs tracking-wider">
+                              RAINBOW
+                            </div>
+                            <span className="text-[10px] text-zinc-300 font-mono mt-2">
+                              Flash Mirror Coating
+                            </span>
+                          </div>
+
+                          <div className="space-y-1">
+                            <div className="text-[10px] font-mono text-[#fb7185] font-bold">STUDDS COMPATIBLE</div>
+                            <h3 className="font-bold text-white text-sm">Studds Thunder Iridium Rainbow</h3>
+                            <p className="text-xs text-zinc-400">High-reflective metallic rainbow mirror finish with UV400 block.</p>
+                          </div>
+                        </div>
+
+                        <div className="pt-2 border-t border-zinc-800 flex items-center justify-between">
+                          <div>
+                            <div className="text-base font-black text-[#fb7185] font-['Syne']">₹499</div>
+                            <div className="text-[10px] text-zinc-500 line-through">MRP ₹899 (44% OFF)</div>
+                          </div>
+                          <a
+                            href="https://virgovisor.com"
+                            target="_blank"
+                            rel="noreferrer"
+                            className="px-3 py-1.5 rounded-lg bg-[#e11d48] text-white font-mono text-xs font-bold hover:bg-[#f43f5e] transition-colors"
+                          >
+                            Buy Now
+                          </a>
+                        </div>
+                      </div>
+
+                      {/* Product 4 */}
+                      <div className="p-4 rounded-2xl bg-zinc-900/90 border border-zinc-800 hover:border-[#e11d48] transition-all flex flex-col justify-between space-y-4 group">
+                        <div className="space-y-3">
+                          <div className="w-full h-36 rounded-xl bg-gradient-to-br from-cyan-950 to-zinc-900 border border-zinc-700/60 flex flex-col items-center justify-center p-3 relative overflow-hidden group-hover:scale-[1.02] transition-transform">
+                            <span className="absolute top-2 left-2 px-2 py-0.5 rounded text-[10px] font-mono bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
+                              UNIVERSAL
+                            </span>
+                            <div className="w-20 h-12 rounded-full border-2 border-dashed border-cyan-400 flex items-center justify-center font-black text-cyan-300 text-xs tracking-wider">
+                              ANTI-FOG
+                            </div>
+                            <span className="text-[10px] text-zinc-400 font-mono mt-2">
+                              Hydrophobic Nano Seal
+                            </span>
+                          </div>
+
+                          <div className="space-y-1">
+                            <div className="text-[10px] font-mono text-[#fb7185] font-bold">ALL HELMETS</div>
+                            <h3 className="font-bold text-white text-sm">Universal Pinlock Anti-Fog Insert</h3>
+                            <p className="text-xs text-zinc-400">Prevents morning condensation and breath fogging during winter rides.</p>
+                          </div>
+                        </div>
+
+                        <div className="pt-2 border-t border-zinc-800 flex items-center justify-between">
+                          <div>
+                            <div className="text-base font-black text-[#fb7185] font-['Syne']">₹299</div>
+                            <div className="text-[10px] text-zinc-500 line-through">MRP ₹499 (40% OFF)</div>
+                          </div>
+                          <a
+                            href="https://virgovisor.com"
+                            target="_blank"
+                            rel="noreferrer"
+                            className="px-3 py-1.5 rounded-lg bg-[#e11d48] text-white font-mono text-xs font-bold hover:bg-[#f43f5e] transition-colors"
+                          >
+                            Buy Now
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+
+                {/* 5. Vishnu Enterprises Engineering Standards */}
+                <section className="py-10 px-4 sm:px-8 bg-zinc-950 border-b border-zinc-800">
+                  <div className="max-w-6xl mx-auto space-y-6">
+                    <div className="text-center space-y-2">
+                      <div className="text-xs font-mono text-[#fb7185] uppercase tracking-widest">
+                        MANUFACTURING EXCELLENCE // VISHNU ENTERPRISES
+                      </div>
+                      <h2 className="text-xl sm:text-3xl font-['Syne'] font-black text-white uppercase">
+                        Why Riders Across India Choose Virgo Visor
+                      </h2>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      <div className="p-5 rounded-2xl bg-zinc-900/60 border border-zinc-800 space-y-2">
+                        <div className="w-8 h-8 rounded-lg bg-[#e11d48]/20 text-[#fb7185] flex items-center justify-center font-bold">
+                          01
+                        </div>
+                        <h3 className="font-bold text-white text-sm">Hard-Coat Scratch Resistance</h3>
+                        <p className="text-xs text-zinc-400 leading-relaxed">
+                          Treated with an ultra-durable polysiloxane surface shield that withstands high-speed road debris, dust, and wash micro-scratches.
+                        </p>
+                      </div>
+
+                      <div className="p-5 rounded-2xl bg-zinc-900/60 border border-zinc-800 space-y-2">
+                        <div className="w-8 h-8 rounded-lg bg-[#e11d48]/20 text-[#fb7185] flex items-center justify-center font-bold">
+                          02
+                        </div>
+                        <h3 className="font-bold text-white text-sm">Exact OEM Pivot Snap-Fit</h3>
+                        <p className="text-xs text-zinc-400 leading-relaxed">
+                          Engineered with laser precision to match factory pivot ratchets of Vega, Steelbird, Studds, and LS2 without loose play or wind flutter.
+                        </p>
+                      </div>
+
+                      <div className="p-5 rounded-2xl bg-zinc-900/60 border border-zinc-800 space-y-2">
+                        <div className="w-8 h-8 rounded-lg bg-[#e11d48]/20 text-[#fb7185] flex items-center justify-center font-bold">
+                          03
+                        </div>
+                        <h3 className="font-bold text-white text-sm">D2C Factory Price Advantage</h3>
+                        <p className="text-xs text-zinc-400 leading-relaxed">
+                          Shipped directly from Vishnu Enterprises manufacturing inventory to your doorstep, saving 40-50% over retail distributor markups.
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </section>

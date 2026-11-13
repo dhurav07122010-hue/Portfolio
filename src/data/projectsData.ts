@@ -36,6 +36,27 @@ export const PROJECTS_DATA: ProjectData[] = [
     ],
   },
   {
+    id: 'virgovisor',
+    title: 'Virgo Visor',
+    subtitle: 'Premium Optical Helmet Visor D2C E-Commerce & ROAS Acquisition Engine',
+    url: 'https://virgovisor.com',
+    displayUrl: 'virgovisor.com',
+    category: 'D2C E-COMMERCE & AUTOMATION // VISHNU ENTERPRISES',
+    heroBadge: 'Optical-Grade Polycarbonate Helmet Visors (Pan-India D2C)',
+    heroTitle: 'Hard-Coat Scratch Resistant Helmet Visors & D2C E-Commerce',
+    heroSubtitle:
+      'Engineered for Vega, Steelbird, Studds, LS2, and MT helmet models with UV400 protection, online UPI/COD checkout, and automated shipping workflows.',
+    description:
+      'Architected end-to-end e-commerce store infrastructure and multi-channel paid acquisition engine for virgovisor.com. Delivered +480% revenue expansion, automated inventory synchronization, frictionless single-page checkout, and targeted Meta Ads capturing motorcycle enthusiasts across India.',
+    tags: ['PAN-INDIA D2C', 'META ADS CBO', 'HIGH-SPEED CHECKOUT', 'ROAS 5.1X'],
+    metrics: [
+      { label: 'Revenue Growth', value: '+480%', color: '#00f0ff' },
+      { label: 'Blended ROAS', value: '5.1x', color: '#10b981' },
+      { label: 'Conversion Rate', value: '4.8%', color: '#a855f7' },
+      { label: 'Dispatch SLA', value: '<24h', color: '#f59e0b' },
+    ],
+  },
+  {
     id: 'nexus',
     title: 'Nexus Performance Ad Suite',
     subtitle: 'Full-Funnel Paid Acquisition & Meta Ads Architecture',

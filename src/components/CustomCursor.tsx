@@ -10,15 +10,15 @@ export const CustomCursor: React.FC = () => {
   const [position, setPosition] = useState({ x: -100, y: -100 })
   const [trailingPos, setTrailingPos] = useState({ x: -100, y: -100 })
   const [isHovered, setIsHovered] = useState(false)
-  const [isVisible, setIsVisible] = useState(false)
+  const [isVisible, setIsVisible] = useState(() =>
+    typeof window !== 'undefined' ? window.matchMedia('(pointer: fine)').matches : false
+  )
   const [ripples, setRipples] = useState<ClickRipple[]>([])
   const animRef = useRef<number | null>(null)
 
   useEffect(() => {
     const media = window.matchMedia('(pointer: fine)')
     if (!media.matches) return
-
-    setIsVisible(true)
 
     const handleMouseMove = (e: MouseEvent) => {
       setPosition({ x: e.clientX, y: e.clientY })
