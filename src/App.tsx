@@ -117,10 +117,11 @@ export const App: React.FC = () => {
           ]}
         />
 
-        {/* Part 01: Selected Work & Live Front Page Browser */}
+        {/* Part 01: Selected Work & 3D Stage Carousel */}
         <WorkSection
           onOpenParadiseModal={handleOpenParadiseModal}
           onOpenFrontPageModal={handleOpenFrontPageModal}
+          onOpenTerminal={handleOpenTerminal}
         />
 
         {/* Reverse Kinetic Marquee 2 */}
