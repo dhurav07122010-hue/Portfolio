@@ -1,15 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react'
 import {
   ExternalLink,
-  Maximize2,
   Laptop,
   Tablet,
   Smartphone,
   Lock,
   RotateCw,
-  ShoppingBag,
-  Truck,
-  ArrowRight,
   GraduationCap,
   Shield,
   ChevronDown,
@@ -24,27 +20,31 @@ import { ScrollReveal } from './ScrollReveal'
 import { PROJECTS_DATA, type ProjectData } from '../data/projectsData'
 
 interface WorkSectionProps {
-  onOpenParadiseModal: () => void
+  onOpenParadiseModal?: () => void
   onOpenFrontPageModal?: (projectId: string) => void
   onOpenTerminal?: () => void
 }
 
 type DeviceMode = 'desktop' | 'tablet' | 'mobile'
-type CardViewMode = 'reticle' | 'frontpage'
+type CardViewMode = 'frontpage' | 'reticle'
 
 export const WorkSection: React.FC<WorkSectionProps> = ({
-  onOpenParadiseModal,
-  onOpenFrontPageModal,
   onOpenTerminal,
 }) => {
   const [activeIndex, setActiveIndex] = useState(0)
   const [deviceMode, setDeviceMode] = useState<DeviceMode>('desktop')
   const [cardViewMode, setCardViewMode] = useState<CardViewMode>('frontpage')
   const [isRefreshing, setIsRefreshing] = useState(false)
+  const [refreshKey, setRefreshKey] = useState(0)
   const [showInlineBrowser, setShowInlineBrowser] = useState(true)
   const stageRef = useRef<HTMLDivElement>(null)
 
   const activeProject: ProjectData = PROJECTS_DATA[activeIndex] || PROJECTS_DATA[0]
+
+  const openLiveWebsite = (url: string = activeProject.url) => {
+    sound.playChirp()
+    window.open(url, '_blank', 'noopener,noreferrer')
+  }
 
   const handleNext = () => {
     sound.hoverBeep()
@@ -56,19 +56,11 @@ export const WorkSection: React.FC<WorkSectionProps> = ({
     setActiveIndex((prev) => (prev - 1 + PROJECTS_DATA.length) % PROJECTS_DATA.length)
   }
 
-  const triggerOpenFrontPage = (projectId: string = activeProject.id) => {
-    sound.playChirp()
-    if (onOpenFrontPageModal) {
-      onOpenFrontPageModal(projectId)
-    } else {
-      onOpenParadiseModal()
-    }
-  }
-
   const handleRefresh = (e: React.MouseEvent) => {
     e.stopPropagation()
     sound.hoverBeep()
     setIsRefreshing(true)
+    setRefreshKey((k) => k + 1)
     setTimeout(() => setIsRefreshing(false), 500)
   }
 
@@ -85,7 +77,7 @@ export const WorkSection: React.FC<WorkSectionProps> = ({
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [])
 
-  // Optimized Mouse tilt on 3D active card via CSS Custom Properties (Zero React re-renders)
+  // Mouse tilt on 3D active card via CSS Custom Properties (Zero React re-renders)
   const handleStageMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!stageRef.current) return
     const rect = stageRef.current.getBoundingClientRect()
@@ -104,9 +96,9 @@ export const WorkSection: React.FC<WorkSectionProps> = ({
   const getDeviceWidthClass = () => {
     switch (deviceMode) {
       case 'mobile':
-        return 'max-w-[340px]'
+        return 'w-[375px] max-w-[100%]'
       case 'tablet':
-        return 'max-w-[480px]'
+        return 'w-[768px] max-w-[100%]'
       case 'desktop':
       default:
         return 'w-full'
@@ -163,7 +155,7 @@ export const WorkSection: React.FC<WorkSectionProps> = ({
             <ScrambleText text="FEATURED PRODUCTIONS" />
           </h2>
           <div className="text-[11px] text-zinc-400">
-            Engineered by <strong className="text-white">Dhurav (Age 16)</strong> • Interactive front pages &amp; platforms below
+            Engineered by <strong className="text-white">Dhurav (Age 16)</strong> • Click any card or link to open live website
           </div>
         </div>
 
@@ -246,7 +238,7 @@ export const WorkSection: React.FC<WorkSectionProps> = ({
         ref={stageRef}
         onMouseMove={handleStageMouseMove}
         onMouseLeave={handleStageMouseLeave}
-        className="relative w-full h-[440px] sm:h-[480px] md:h-[500px] flex items-center justify-center my-4 perspective-[1400px] overflow-visible"
+        className="relative w-full h-[450px] sm:h-[490px] md:h-[520px] flex items-center justify-center my-4 perspective-[1400px] overflow-visible"
         style={{ perspective: '1400px', transformStyle: 'preserve-3d' }}
       >
         {PROJECTS_DATA.map((proj, idx) => {
@@ -265,12 +257,9 @@ export const WorkSection: React.FC<WorkSectionProps> = ({
             opacity = 1
             pointerEvents = 'auto'
           } else {
-            // When activeIndex is 0 (Paradise), Virgo Visor sits on the right
-            // When activeIndex is 1 (Virgo Visor), Paradise sits on the left
             const isSideRight = activeIndex === 0
             const tx = isSideRight ? 'calc(48% + 20px)' : 'calc(-48% - 20px)'
             const rotY = isSideRight ? -22 : 22
-            // 14px down ensures the top of the side card never creeps into FEATURED PRODUCTIONS header
             transformStyle = `translate3d(${tx}, 14px, -180px) rotateY(${rotY}deg) scale(0.86)`
             zIndex = 15
             opacity = 0.7
@@ -282,7 +271,7 @@ export const WorkSection: React.FC<WorkSectionProps> = ({
               key={proj.id}
               onClick={() => {
                 if (isCenter) {
-                  triggerOpenFrontPage(proj.id)
+                  openLiveWebsite(proj.url)
                 } else {
                   sound.hoverBeep()
                   setActiveIndex(idx)
@@ -296,9 +285,9 @@ export const WorkSection: React.FC<WorkSectionProps> = ({
                 transition: 'transform 0.75s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease-out',
                 boxShadow: isCenter ? theme.glowShadow : 'none',
               }}
-              className={`absolute w-[90vw] max-w-[520px] sm:max-w-[590px] md:max-w-[640px] h-[360px] sm:h-[390px] md:h-[420px] rounded-[30px] sm:rounded-[36px] border-2 ${
+              className={`absolute w-[92vw] max-w-[540px] sm:max-w-[620px] md:max-w-[660px] h-[380px] sm:h-[410px] md:h-[440px] rounded-[30px] sm:rounded-[36px] border-2 ${
                 theme.borderColor
-              } bg-gradient-to-b from-black/90 via-[#080b14]/85 to-black/95 backdrop-blur-2xl p-6 sm:p-7 flex flex-col justify-between cursor-pointer group transition-shadow duration-500 overflow-hidden`}
+              } bg-gradient-to-b from-black/95 via-[#080b14]/90 to-black/95 backdrop-blur-2xl p-5 sm:p-7 flex flex-col justify-between cursor-pointer group transition-shadow duration-500 overflow-hidden`}
             >
               {/* Radial Holographic Color Bloom inside Card */}
               <div
@@ -329,7 +318,7 @@ export const WorkSection: React.FC<WorkSectionProps> = ({
                 {/* View Mode Toggle Pill on Card */}
                 {isCenter && (
                   <div
-                    className="flex items-center bg-black/60 rounded-full border border-white/15 p-0.5"
+                    className="flex items-center bg-black/70 rounded-full border border-white/15 p-0.5"
                     onClick={(e) => e.stopPropagation()}
                   >
                     <button
@@ -337,12 +326,12 @@ export const WorkSection: React.FC<WorkSectionProps> = ({
                         sound.hoverBeep()
                         setCardViewMode('frontpage')
                       }}
-                      className={`px-2 py-0.5 rounded-full text-[10px] font-bold transition-all flex items-center space-x-1 ${
+                      className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold transition-all flex items-center space-x-1 ${
                         cardViewMode === 'frontpage'
                           ? 'bg-[#00f0ff] text-black shadow-[0_0_8px_#00f0ff]'
                           : 'text-zinc-400 hover:text-white'
                       }`}
-                      title="Show Front Page Preview"
+                      title="Show Live Front Page"
                     >
                       <Monitor className="w-2.5 h-2.5" />
                       <span>FRONT PAGE</span>
@@ -352,7 +341,7 @@ export const WorkSection: React.FC<WorkSectionProps> = ({
                         sound.hoverBeep()
                         setCardViewMode('reticle')
                       }}
-                      className={`px-2 py-0.5 rounded-full text-[10px] font-bold transition-all flex items-center space-x-1 ${
+                      className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold transition-all flex items-center space-x-1 ${
                         cardViewMode === 'reticle'
                           ? 'bg-[#00f0ff] text-black shadow-[0_0_8px_#00f0ff]'
                           : 'text-zinc-400 hover:text-white'
@@ -367,114 +356,35 @@ export const WorkSection: React.FC<WorkSectionProps> = ({
               </div>
 
               {/* ======================================================== */}
-              {/* CENTER DISPLAY: EITHER LIVE FRONT PAGE PREVIEW OR RETICLE */}
+              {/* CENTER DISPLAY: EITHER LIVE WEBSITE FRONT PAGE OR RETICLE */}
               {/* ======================================================== */}
               {isCenter && cardViewMode === 'frontpage' ? (
-                /* LIVE FRONT PAGE PREVIEW DIRECTLY ON CARD */
-                <div className="relative my-auto w-full rounded-2xl overflow-hidden border border-white/15 bg-black/70 shadow-2xl z-10 transition-all duration-300 group-hover:scale-[1.01]">
-                  {proj.id === 'virgovisor' ? (
-                    /* Mini Front Page Preview for Virgo Visor */
-                    <div className="text-white font-sans text-xs bg-zinc-950">
-                      <div className="bg-[#a855f7] px-3 py-1 text-[10px] font-mono flex items-center justify-between">
-                        <div className="flex items-center space-x-1.5 truncate">
-                          <Truck className="w-3 h-3 shrink-0" />
-                          <span className="font-bold">ALL-INDIA FREE DELIVERY:</span>
-                          <span className="truncate">Instant UPI &amp; COD Available</span>
-                        </div>
-                        <span className="bg-black/30 px-1.5 py-0.2 rounded text-[9px]">100% SCRATCH DEFENSE</span>
-                      </div>
-
-                      <div className="p-3 bg-zinc-900 border-b border-zinc-800 flex items-center justify-between">
-                        <div className="flex items-center space-x-2">
-                          <div className="w-6 h-6 rounded-lg bg-[#a855f7] flex items-center justify-center font-black text-xs text-white">
-                            V
-                          </div>
-                          <div>
-                            <div className="font-['Syne'] font-black text-xs text-white tracking-wider">
-                              VIRGO VISOR
-                            </div>
-                            <div className="text-[8px] text-zinc-400">By Vishnu Enterprises • D2C Gear</div>
-                          </div>
-                        </div>
-                        <span className="px-2 py-0.5 rounded bg-[#a855f7] text-white font-bold text-[9px] flex items-center space-x-1">
-                          <ShoppingBag className="w-2.5 h-2.5" />
-                          <span>Store</span>
-                        </span>
-                      </div>
-
-                      <div className="p-4 bg-gradient-to-b from-zinc-900 via-zinc-950 to-black text-center space-y-2">
-                        <span className="inline-block px-2 py-0.5 rounded-full bg-[#a855f7]/15 border border-[#a855f7]/30 text-[#c084fc] text-[9px] font-mono">
-                          ✦ OPTICAL-GRADE POLYCARBONATE
-                        </span>
-                        <h4 className="text-sm sm:text-base font-['Syne'] font-black text-white leading-tight">
-                          Crystal Clear Vision. Hard-Coat Scratch Defense.
-                        </h4>
-                        <div className="grid grid-cols-3 gap-2 pt-1 text-left font-mono">
-                          <div className="p-1.5 rounded-lg bg-zinc-900/90 border border-zinc-800 text-[10px]">
-                            <div className="text-zinc-400 text-[8px]">Clear Optical</div>
-                            <div className="text-[#a855f7] font-bold">₹499</div>
-                          </div>
-                          <div className="p-1.5 rounded-lg bg-zinc-900/90 border border-zinc-800 text-[10px]">
-                            <div className="text-zinc-400 text-[8px]">Smoke Tint</div>
-                            <div className="text-[#a855f7] font-bold">₹549</div>
-                          </div>
-                          <div className="p-1.5 rounded-lg bg-zinc-900/90 border border-zinc-800 text-[10px]">
-                            <div className="text-zinc-400 text-[8px]">Iridium Mirror</div>
-                            <div className="text-[#a855f7] font-bold">₹699</div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ) : (
-                    /* Mini Front Page Preview for Paradise Public School */
-                    <div className="text-zinc-900 font-sans text-xs bg-white">
-                      <div className="bg-[#1e3a8a] text-white px-3 py-1 text-[10px] font-mono flex items-center justify-between">
-                        <span>ADMISSIONS OPEN 2026-27: NURSERY TO CLASS 8</span>
-                        <span>CBSE ENGLISH MEDIUM</span>
-                      </div>
-
-                      <div className="p-3 bg-white border-b border-zinc-200 flex items-center justify-between">
-                        <div className="flex items-center space-x-2">
-                          <div className="w-6 h-6 rounded-lg bg-blue-900 text-white flex items-center justify-center font-black text-xs">
-                            P
-                          </div>
-                          <div>
-                            <div className="font-['Syne'] font-black text-xs text-zinc-900 tracking-wider">
-                              PARADISE PUBLIC SCHOOL
-                            </div>
-                            <div className="text-[8px] text-zinc-500">Affiliated to CBSE • Estd. 1994</div>
-                          </div>
-                        </div>
-                        <span className="px-2 py-0.5 rounded bg-[#1e3a8a] text-white font-bold text-[9px] flex items-center space-x-1">
-                          <GraduationCap className="w-2.5 h-2.5" />
-                          <span>Admissions</span>
-                        </span>
-                      </div>
-
-                      <div className="p-4 bg-gradient-to-b from-blue-50/50 via-white to-white text-center space-y-2">
-                        <span className="inline-block px-2 py-0.5 rounded-full bg-blue-100 text-blue-900 text-[9px] font-mono">
-                          ✦ ATAL INNOVATION &amp; SPORTS TURF
-                        </span>
-                        <h4 className="text-sm sm:text-base font-['Syne'] font-black text-zinc-900 leading-tight">
-                          Nurturing Tomorrow's Leaders Through Foundational Eminence
-                        </h4>
-                        <div className="grid grid-cols-3 gap-2 pt-1 text-left font-mono">
-                          <div className="p-1.5 rounded-lg bg-blue-50 border border-blue-100 text-[10px]">
-                            <div className="text-zinc-500 text-[8px]">Admissions</div>
-                            <div className="text-[#00f0ff] font-bold">OPEN</div>
-                          </div>
-                          <div className="p-1.5 rounded-lg bg-blue-50 border border-blue-100 text-[10px]">
-                            <div className="text-zinc-500 text-[8px]">Google 3-Pack</div>
-                            <div className="text-blue-900 font-bold">#1 RANK</div>
-                          </div>
-                          <div className="p-1.5 rounded-lg bg-blue-50 border border-blue-100 text-[10px]">
-                            <div className="text-zinc-500 text-[8px]">Student App</div>
-                            <div className="text-blue-900 font-bold">ACTIVE</div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  )}
+                /* 100% REAL AUTHENTIC LIVE FRONT PAGE OF THE WEBSITE VIA SCALED IFRAME */
+                <div className="relative my-auto w-full h-[230px] sm:h-[260px] md:h-[280px] rounded-2xl overflow-hidden border border-white/20 bg-zinc-950 shadow-2xl z-10 group/preview">
+                  <iframe
+                    key={`card-iframe-${proj.id}-${refreshKey}`}
+                    src={proj.url}
+                    title={`${proj.title} Live Front Page`}
+                    className="w-[1280px] h-[760px] border-0 origin-top-left pointer-events-none select-none bg-zinc-950"
+                    style={{
+                      transform: 'scale(0.44)',
+                      width: '228%',
+                      height: '228%',
+                    }}
+                    loading="eager"
+                  />
+                  {/* Click overlay to open real live website */}
+                  <div
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      openLiveWebsite(proj.url)
+                    }}
+                    className="absolute inset-0 bg-transparent hover:bg-black/30 transition-all flex items-center justify-center cursor-pointer group-hover/preview:backdrop-blur-[1.5px]"
+                  >
+                    <span className="opacity-0 group-hover/preview:opacity-100 transition-opacity px-5 py-2.5 rounded-xl bg-black/90 border border-[#00f0ff] text-[#00f0ff] font-mono text-xs font-bold shadow-2xl flex items-center space-x-2">
+                      <span>OPEN {proj.displayUrl.toUpperCase()} ↗</span>
+                    </span>
+                  </div>
                 </div>
               ) : (
                 /* 3D HOLOGRAPHIC RETICLE DISPLAY */
@@ -523,14 +433,13 @@ export const WorkSection: React.FC<WorkSectionProps> = ({
                 <button
                   onClick={(e) => {
                     e.stopPropagation()
-                    triggerOpenFrontPage(proj.id)
+                    openLiveWebsite(proj.url)
                   }}
                   onMouseEnter={() => sound.hoverBeep()}
-                  className="px-3.5 py-1.5 rounded-xl bg-white/10 hover:bg-white text-white hover:text-black font-bold text-[11px] transition-all flex items-center space-x-1.5 cursor-pointer shadow-md group/btn"
+                  className="px-4 py-2 rounded-xl bg-white/10 hover:bg-[#00f0ff] text-white hover:text-black font-bold text-[11px] transition-all flex items-center space-x-1.5 cursor-pointer shadow-md group/btn"
                 >
-                  <Maximize2 className="w-3.5 h-3.5" />
-                  <span>INSPECT FULLSCREEN</span>
-                  <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 transition-transform" />
+                  <span>OPEN LIVE WEBSITE</span>
+                  <ExternalLink className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 transition-transform" />
                 </button>
               </div>
             </div>
@@ -618,37 +527,22 @@ export const WorkSection: React.FC<WorkSectionProps> = ({
             className="px-4 py-2.5 rounded-2xl border border-white/20 bg-black/60 hover:border-[#00f0ff] text-zinc-300 hover:text-white transition-all flex items-center space-x-2 cursor-pointer text-xs shadow-md"
           >
             {showInlineBrowser ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
-            <span>{showInlineBrowser ? 'MINIMIZE FRONT PAGE SIMULATOR' : 'EXPAND FRONT PAGE SIMULATOR'}</span>
+            <span>{showInlineBrowser ? 'HIDE INTERACTIVE BROWSER' : 'SHOW INTERACTIVE BROWSER'}</span>
           </button>
 
-          <a
-            href={activeProject.url}
-            target="_blank"
-            rel="noreferrer"
-            onClick={(e) => {
-              e.stopPropagation()
-              sound.playChirp()
-            }}
-            onMouseEnter={() => sound.hoverBeep()}
-            className="px-4 py-2.5 rounded-2xl border border-white/15 bg-white/5 hover:border-[#00f0ff] text-zinc-300 hover:text-[#00f0ff] transition-all flex items-center space-x-1.5 text-xs shadow-md"
-          >
-            <span>LIVE DOMAIN</span>
-            <ExternalLink className="w-3.5 h-3.5" />
-          </a>
-
           <button
-            onClick={() => triggerOpenFrontPage(activeProject.id)}
+            onClick={() => openLiveWebsite(activeProject.url)}
             onMouseEnter={() => sound.hoverBeep()}
             className="px-5 py-2.5 rounded-2xl bg-[#00f0ff] text-black font-bold hover:bg-white transition-all flex items-center space-x-2 cursor-pointer shadow-[0_0_25px_rgba(0,240,255,0.4)] text-xs"
           >
-            <Maximize2 className="w-4 h-4" />
-            <span>FULLSCREEN FRONT PAGE</span>
+            <span>VISIT {activeProject.displayUrl.toUpperCase()}</span>
+            <ExternalLink className="w-4 h-4" />
           </button>
         </div>
       </div>
 
       {/* ======================================================== */}
-      {/* EXPANDABLE INLINE BROWSER SIMULATOR (LIVE & VISIBLE BY DEFAULT) */}
+      {/* EXPANDABLE INLINE BROWSER SIMULATOR (100% REAL LIVE WEBSITE) */}
       {/* ======================================================== */}
       {showInlineBrowser && (
         <ScrollReveal parallaxSpeed={0.04} className="pt-6">
@@ -665,21 +559,28 @@ export const WorkSection: React.FC<WorkSectionProps> = ({
               </div>
 
               {/* URL Bar */}
-              <div className="flex-1 max-w-xs mx-auto flex items-center space-x-1.5 px-2.5 py-1 rounded-lg bg-black/50 border border-white/10 text-[11px] text-zinc-300">
+              <div
+                onClick={() => openLiveWebsite(activeProject.url)}
+                className="flex-1 max-w-sm mx-auto flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-black/60 border border-white/15 text-[11px] text-zinc-200 cursor-pointer hover:border-[#00f0ff]/50 transition-colors"
+                title="Click to open website in new tab"
+              >
                 <Lock className="w-3 h-3 text-emerald-400 shrink-0" />
-                <span className="truncate">https://{activeProject.displayUrl}</span>
+                <span className="truncate">{activeProject.url}</span>
+                <ExternalLink className="w-3 h-3 text-zinc-500 ml-auto shrink-0" />
+              </div>
+
+              {/* Device Mode Switcher & Refresh */}
+              <div className="flex items-center space-x-2">
                 <button
                   onClick={handleRefresh}
-                  className={`ml-auto text-zinc-500 hover:text-zinc-300 ${
+                  className={`p-1.5 rounded-lg border border-white/10 bg-black/40 text-zinc-400 hover:text-white transition-colors ${
                     isRefreshing ? 'animate-spin' : ''
                   }`}
+                  title="Reload Live Frame"
                 >
                   <RotateCw className="w-3 h-3" />
                 </button>
-              </div>
 
-              {/* Device Mode Switcher */}
-              <div className="flex items-center space-x-1">
                 <div className="flex items-center bg-black/60 rounded-md border border-white/10 p-0.5 text-zinc-400">
                   <button
                     onClick={() => {
@@ -721,139 +622,18 @@ export const WorkSection: React.FC<WorkSectionProps> = ({
               </div>
             </div>
 
-            {/* Browser Body Viewport */}
-            <div
-              className="bg-black/95 p-3 overflow-y-auto max-h-[560px] flex justify-center cursor-pointer relative"
-              onClick={() => triggerOpenFrontPage(activeProject.id)}
-            >
+            {/* Browser Body Viewport (100% Real Live Website Frame) */}
+            <div className="bg-zinc-950 p-2 sm:p-4 flex justify-center relative w-full overflow-x-auto min-h-[500px]">
               <div
-                className={`${getDeviceWidthClass()} transition-all duration-300 rounded-lg overflow-hidden border border-white/10 bg-white text-zinc-900 shadow-xl`}
+                className={`${getDeviceWidthClass()} transition-all duration-300 rounded-lg overflow-hidden border border-white/10 bg-zinc-950 shadow-2xl relative`}
               >
-                {activeProject.id === 'virgovisor' ? (
-                  /* VIRGOVISOR.COM SIMULATOR */
-                  <div className="font-sans text-xs bg-zinc-950 text-white select-text">
-                    <div className="bg-[#a855f7] text-white py-1 px-3 flex items-center justify-between text-[10px] font-mono">
-                      <div className="flex items-center space-x-1.5 truncate">
-                        <Truck className="w-3 h-3 shrink-0" />
-                        <span className="font-bold">FREE ALL-INDIA DELIVERY:</span>
-                        <span className="truncate">Cash on Delivery &amp; Instant UPI Available</span>
-                      </div>
-                      <span className="hidden sm:inline text-[9px] bg-black/40 px-2 py-0.5 rounded">
-                        100% SCRATCH RESISTANT
-                      </span>
-                    </div>
-
-                    <div className="p-3 bg-zinc-900 border-b border-zinc-800 flex items-center justify-between">
-                      <div className="flex items-center space-x-2">
-                        <div className="w-7 h-7 rounded-lg bg-[#a855f7] flex items-center justify-center font-black text-white text-xs">
-                          V
-                        </div>
-                        <div>
-                          <div className="font-['Syne'] font-black text-sm text-white tracking-wider">
-                            VIRGO VISOR
-                          </div>
-                          <div className="text-[9px] text-zinc-400">By Vishnu Enterprises • D2C Gear</div>
-                        </div>
-                      </div>
-
-                      <div className="flex items-center space-x-2">
-                        <span className="px-2.5 py-1 rounded bg-[#a855f7] text-white font-bold text-[10px] flex items-center space-x-1">
-                          <ShoppingBag className="w-3 h-3" />
-                          <span>Store</span>
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="p-6 bg-gradient-to-b from-zinc-900 via-zinc-950 to-black text-center space-y-3">
-                      <span className="inline-block px-2.5 py-0.5 rounded-full bg-[#a855f7]/15 border border-[#a855f7]/40 text-[#c084fc] text-[10px] font-mono">
-                        ✦ OPTICAL-GRADE POLYCARBONATE
-                      </span>
-
-                      <h4 className="text-base sm:text-xl font-['Syne'] font-black text-white leading-tight uppercase">
-                        Crystal Clear Vision. Hard-Coat Scratch Defense.
-                      </h4>
-
-                      <div className="grid grid-cols-3 gap-2 pt-2 text-left">
-                        <div className="p-2.5 rounded-xl bg-zinc-900 border border-zinc-800 space-y-1">
-                          <div className="font-bold text-white text-[11px]">Clear Optical</div>
-                          <div className="text-[9px] text-zinc-400">Day &amp; Night 99%</div>
-                          <div className="text-[#a855f7] font-black text-xs">₹499</div>
-                        </div>
-                        <div className="p-2.5 rounded-xl bg-zinc-900 border border-zinc-800 space-y-1">
-                          <div className="font-bold text-white text-[11px]">Smoke Tinted</div>
-                          <div className="text-[9px] text-zinc-400">Anti-Sun Glare</div>
-                          <div className="text-[#a855f7] font-black text-xs">₹549</div>
-                        </div>
-                        <div className="p-2.5 rounded-xl bg-zinc-900 border border-zinc-800 space-y-1">
-                          <div className="font-bold text-white text-[11px]">Iridium Mirror</div>
-                          <div className="text-[9px] text-zinc-400">Flash Reflective</div>
-                          <div className="text-[#a855f7] font-black text-xs">₹699</div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ) : (
-                  /* PARADISE PUBLIC SCHOOL SIMULATOR */
-                  <div className="font-sans text-xs bg-white text-zinc-900 select-text">
-                    <div className="bg-[#1e3a8a] text-white py-1 px-3 flex items-center justify-between text-[10px] font-mono">
-                      <span>ADMISSIONS OPEN 2026-27: NURSERY TO CLASS 8</span>
-                      <span>CBSE ENGLISH MEDIUM</span>
-                    </div>
-
-                    <div className="p-3 bg-white border-b border-zinc-200 flex items-center justify-between">
-                      <div className="flex items-center space-x-2">
-                        <div className="w-7 h-7 rounded-lg bg-blue-900 text-white flex items-center justify-center font-black text-xs">
-                          P
-                        </div>
-                        <div>
-                          <div className="font-['Syne'] font-black text-sm text-zinc-900 tracking-wider">
-                            PARADISE PUBLIC SCHOOL
-                          </div>
-                          <div className="text-[9px] text-zinc-500">Affiliated to CBSE • Estd. 1994</div>
-                        </div>
-                      </div>
-
-                      <div className="flex items-center space-x-2">
-                        <span className="px-2.5 py-1 rounded bg-[#1e3a8a] text-white font-bold text-[10px] flex items-center space-x-1">
-                          <GraduationCap className="w-3 h-3" />
-                          <span>Admissions</span>
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="p-6 bg-gradient-to-b from-blue-50/50 via-white to-white text-center space-y-3">
-                      <span className="inline-block px-2.5 py-0.5 rounded-full bg-blue-100 text-blue-900 text-[10px] font-mono">
-                        ✦ ATAL INNOVATION &amp; SPORTS TURF
-                      </span>
-
-                      <h4 className="text-base sm:text-xl font-['Syne'] font-black text-zinc-900 leading-tight">
-                        Nurturing Tomorrow's Leaders Through Foundational Eminence
-                      </h4>
-
-                      <p className="text-[11px] text-zinc-600 line-clamp-2 max-w-md mx-auto">
-                        32+ Years of Academic Rigor, Atal Tinkering Jr. Labs, World-Class Sports Turf, and Deeply Rooted Indian Values.
-                      </p>
-
-                      <div className="grid grid-cols-3 gap-2 pt-2 text-left">
-                        <div className="p-2.5 rounded-xl bg-blue-50 border border-blue-100 space-y-1">
-                          <div className="font-bold text-zinc-900 text-[11px]">Admissions</div>
-                          <div className="text-[9px] text-zinc-500">Nur to Class 8</div>
-                          <div className="text-[#00f0ff] font-black text-xs">OPEN</div>
-                        </div>
-                        <div className="p-2.5 rounded-xl bg-blue-50 border border-blue-100 space-y-1">
-                          <div className="font-bold text-zinc-900 text-[11px]">Google 3-Pack</div>
-                          <div className="text-[9px] text-zinc-500">Local Area</div>
-                          <div className="text-blue-900 font-black text-xs">#1 RANK</div>
-                        </div>
-                        <div className="p-2.5 rounded-xl bg-blue-50 border border-blue-100 space-y-1">
-                          <div className="font-bold text-zinc-900 text-[11px]">Student App</div>
-                          <div className="text-[9px] text-zinc-500">Live Portal</div>
-                          <div className="text-blue-900 font-black text-xs">ACTIVE</div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                )}
+                <iframe
+                  key={`full-frame-${activeProject.id}-${deviceMode}-${refreshKey}`}
+                  src={activeProject.url}
+                  title={`${activeProject.title} Live Website`}
+                  className="w-full h-[620px] border-0 bg-zinc-950"
+                  loading="lazy"
+                />
               </div>
             </div>
           </div>
