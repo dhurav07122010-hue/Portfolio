@@ -12,8 +12,6 @@ import {
   ArrowRight,
   GraduationCap,
   Shield,
-  Activity,
-  Radar,
   ChevronDown,
   ChevronUp,
 } from 'lucide-react'
@@ -89,7 +87,7 @@ export const WorkSection: React.FC<WorkSectionProps> = ({
     const rect = e.currentTarget.getBoundingClientRect()
     const x = (e.clientX - rect.left) / rect.width - 0.5
     const y = (e.clientY - rect.top) / rect.height - 0.5
-    setTilt({ x: x * 12, y: -y * 12 })
+    setTilt({ x: x * 10, y: -y * 10 })
   }
 
   const handleStageMouseLeave = () => {
@@ -124,41 +122,17 @@ export const WorkSection: React.FC<WorkSectionProps> = ({
           coords: '28.7041° N, 77.1025° E',
         }
       case 'virgovisor':
-        return {
-          accentColor: '#e11d48',
-          borderColor: 'border-[#e11d48]/70',
-          glowShadow: '0 0 60px rgba(225, 29, 72, 0.4)',
-          glowBg: 'from-[#e11d48]/15 via-rose-950/20 to-transparent',
-          line1: '.VIRGO',
-          line2: 'VISOR',
-          icon: <Shield className="w-8 h-8 text-[#fb7185]" />,
-          tagline: 'OPTICAL HELMET VISORS // VISHNU ENTERPRISES',
-          coords: 'PAN-INDIA D2C // DISPATCH <24H',
-        }
-      case 'nexus':
+      default:
         return {
           accentColor: '#a855f7',
           borderColor: 'border-[#a855f7]/60',
           glowShadow: '0 0 60px rgba(168, 85, 247, 0.35)',
           glowBg: 'from-[#a855f7]/15 via-purple-950/20 to-transparent',
-          line1: '.NEXUS',
-          line2: 'PERFORMANCE',
-          icon: <Activity className="w-8 h-8 text-[#c084fc]" />,
-          tagline: 'META & GOOGLE ADS // 5.1X ROAS',
-          coords: 'SERVER CAPI // 99.4% ATTRIBUTION',
-        }
-      case 'cyberpulse':
-      default:
-        return {
-          accentColor: '#10b981',
-          borderColor: 'border-[#10b981]/60',
-          glowShadow: '0 0 60px rgba(16, 185, 129, 0.35)',
-          glowBg: 'from-[#10b981]/15 via-emerald-950/20 to-transparent',
-          line1: '.CYBERPULSE',
-          line2: 'SEO ENGINE',
-          icon: <Radar className="w-8 h-8 text-[#34d399]" />,
-          tagline: 'GOOGLE 3-PACK // ENTITY SCHEMA',
-          coords: 'LOCAL 3-PACK #1 // ZERO-CLICK',
+          line1: '.VIRGO',
+          line2: 'VISOR',
+          icon: <Shield className="w-8 h-8 text-[#c084fc]" />,
+          tagline: 'OPTICAL HELMET VISORS // VISHNU ENTERPRISES',
+          coords: 'PAN-INDIA D2C // DISPATCH <24H',
         }
     }
   }
@@ -186,7 +160,7 @@ export const WorkSection: React.FC<WorkSectionProps> = ({
           </div>
         </div>
 
-        {/* Top-Right: Pills matching screenshot [ WORK ~ CONTACT ] & << 2. SERGEY AZBE >> */}
+        {/* Top-Right: Pills matching screenshot [ WORK ~ CONTACT ] & << 01. PARADISE PUBLIC SCHOOL >> */}
         <div className="flex flex-col items-start sm:items-end space-y-2.5">
           {/* Pill 1: [ WORK ~ CONTACT ] with center wave */}
           <div className="inline-flex items-center space-x-3 px-5 py-2 rounded-full border border-white/20 bg-black/75 backdrop-blur-md shadow-xl text-xs font-mono">
@@ -228,7 +202,7 @@ export const WorkSection: React.FC<WorkSectionProps> = ({
             </button>
           </div>
 
-          {/* Pill 2: << 02. VIRGO VISOR >> with left/right switcher */}
+          {/* Pill 2: Project Switcher */}
           <div className="inline-flex items-center justify-between space-x-2 px-3 py-1.5 rounded-full border border-white/15 bg-black/80 backdrop-blur-md shadow-lg text-[11px] font-mono text-zinc-300 min-w-[240px]">
             <button
               onClick={handlePrev}
@@ -259,26 +233,20 @@ export const WorkSection: React.FC<WorkSectionProps> = ({
       </div>
 
       {/* ======================================================== */}
-      {/* 3D FLOATING CARDS STAGE CAROUSEL (EXACT SCREENSHOT MATCH) */}
+      {/* 3D FLOATING CARDS STAGE CAROUSEL (CLEAN 2-CARD DISPLAY) */}
       {/* ======================================================== */}
       <div
         ref={stageRef}
         onMouseMove={handleStageMouseMove}
         onMouseLeave={handleStageMouseLeave}
-        className="relative w-full h-[460px] sm:h-[500px] md:h-[540px] flex items-center justify-center my-auto perspective-[1400px] overflow-visible"
+        className="relative w-full h-[440px] sm:h-[480px] md:h-[500px] flex items-center justify-center my-4 perspective-[1400px] overflow-visible"
         style={{ perspective: '1400px', transformStyle: 'preserve-3d' }}
       >
         {PROJECTS_DATA.map((proj, idx) => {
-          let diff = idx - activeIndex
-          if (diff < -1 && PROJECTS_DATA.length > 2) diff += PROJECTS_DATA.length
-          if (diff > 1 && PROJECTS_DATA.length > 2) diff -= PROJECTS_DATA.length
-
+          const isCenter = idx === activeIndex
           const theme = getCardTheme(proj.id)
-          const isCenter = diff === 0
-          const isRight = diff === 1 || (activeIndex === PROJECTS_DATA.length - 1 && idx === 0)
-          const isLeft = diff === -1 || (activeIndex === 0 && idx === PROJECTS_DATA.length - 1)
 
-          // 3D Matrix Transformations
+          // 3D Matrix Transformations for 2-card showcase
           let transformStyle = ''
           let zIndex = 10
           let opacity = 0
@@ -289,21 +257,17 @@ export const WorkSection: React.FC<WorkSectionProps> = ({
             zIndex = 30
             opacity = 1
             pointerEvents = 'auto'
-          } else if (isRight && !isCenter) {
-            transformStyle = `translate3d(calc(55% + 40px), 0, -260px) rotateY(-32deg) rotateX(2deg) scale(0.85)`
-            zIndex = 15
-            opacity = 0.65
-            pointerEvents = 'auto'
-          } else if (isLeft && !isCenter) {
-            transformStyle = `translate3d(calc(-55% - 40px), 0, -260px) rotateY(32deg) rotateX(-2deg) scale(0.85)`
-            zIndex = 15
-            opacity = 0.65
-            pointerEvents = 'auto'
           } else {
-            transformStyle = `translate3d(0, 0, -600px) scale(0.55)`
-            zIndex = 5
-            opacity = 0
-            pointerEvents = 'none'
+            // When activeIndex is 0 (Paradise), Virgo Visor sits on the right
+            // When activeIndex is 1 (Virgo Visor), Paradise sits on the left
+            const isSideRight = activeIndex === 0
+            const tx = isSideRight ? 'calc(48% + 20px)' : 'calc(-48% - 20px)'
+            const rotY = isSideRight ? -22 : 22
+            // 14px down ensures the top of the side card never creeps into FEATURED PRODUCTIONS header
+            transformStyle = `translate3d(${tx}, 14px, -180px) rotateY(${rotY}deg) scale(0.86)`
+            zIndex = 15
+            opacity = 0.7
+            pointerEvents = 'auto'
           }
 
           return (
@@ -312,10 +276,9 @@ export const WorkSection: React.FC<WorkSectionProps> = ({
               onClick={() => {
                 if (isCenter) {
                   triggerOpenFrontPage(proj.id)
-                } else if (isRight) {
-                  handleNext()
-                } else if (isLeft) {
-                  handlePrev()
+                } else {
+                  sound.hoverBeep()
+                  setActiveIndex(idx)
                 }
               }}
               style={{
@@ -326,9 +289,9 @@ export const WorkSection: React.FC<WorkSectionProps> = ({
                 transition: 'transform 0.75s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease-out',
                 boxShadow: isCenter ? theme.glowShadow : 'none',
               }}
-              className={`absolute w-[92vw] max-w-[540px] sm:max-w-[620px] md:max-w-[680px] h-[380px] sm:h-[420px] md:h-[450px] rounded-[32px] sm:rounded-[38px] border-2 ${
+              className={`absolute w-[90vw] max-w-[520px] sm:max-w-[590px] md:max-w-[640px] h-[360px] sm:h-[390px] md:h-[420px] rounded-[30px] sm:rounded-[36px] border-2 ${
                 theme.borderColor
-              } bg-gradient-to-b from-black/85 via-[#080b14]/75 to-black/90 backdrop-blur-2xl p-6 sm:p-8 flex flex-col justify-between cursor-pointer group transition-shadow duration-500 overflow-hidden`}
+              } bg-gradient-to-b from-black/90 via-[#080b14]/85 to-black/95 backdrop-blur-2xl p-6 sm:p-8 flex flex-col justify-between cursor-pointer group transition-shadow duration-500 overflow-hidden`}
             >
               {/* Radial Holographic Color Bloom inside Card */}
               <div
@@ -336,7 +299,7 @@ export const WorkSection: React.FC<WorkSectionProps> = ({
               />
 
               {/* High-Tech Grid Dots Texture */}
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.08)_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none opacity-40" />
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.06)_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none opacity-40" />
 
               {/* Fine Corner Holographic Brackets */}
               <div className="absolute top-4 left-4 w-4 h-4 border-t border-l border-white/30 pointer-events-none" />
@@ -361,13 +324,13 @@ export const WorkSection: React.FC<WorkSectionProps> = ({
               </div>
 
               {/* ======================================================== */}
-              {/* CENTER CIRCULAR RETICLE TARGET (MATCHING SCREENSHOT) */}
+              {/* CENTER CIRCULAR RETICLE TARGET */}
               {/* ======================================================== */}
               <div className="relative my-auto flex flex-col items-center justify-center text-center z-10 py-2">
                 {/* Outer Reticle Ring */}
-                <div className="absolute w-52 h-52 sm:w-64 sm:h-64 rounded-full border border-white/15 pointer-events-none flex items-center justify-center">
+                <div className="absolute w-48 h-48 sm:w-60 sm:h-60 rounded-full border border-white/15 pointer-events-none flex items-center justify-center">
                   {/* Concentric Dashed Ring with Slow Rotation */}
-                  <div className="w-40 h-40 sm:w-52 sm:h-52 rounded-full border border-dashed border-white/20 animate-[spin_40s_linear_infinite]" />
+                  <div className="w-36 h-36 sm:w-48 sm:h-48 rounded-full border border-dashed border-white/20 animate-[spin_40s_linear_infinite]" />
                   {/* Horizontal Reticle Crosshair Line */}
                   <div className="absolute w-[120%] h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent" />
                   {/* Vertical Reticle Crosshair Line */}
@@ -379,7 +342,7 @@ export const WorkSection: React.FC<WorkSectionProps> = ({
                   {theme.icon}
                 </div>
 
-                {/* Massive Display Title with Dot Prefix (Matching Screenshot's .20 YEARS OF XBOX) */}
+                {/* Massive Display Title */}
                 <div className="space-y-0.5 relative z-10">
                   <h3 className="font-['Syne'] font-black text-3xl sm:text-5xl md:text-6xl text-white tracking-tight leading-[0.9] uppercase drop-shadow-[0_0_20px_rgba(0,0,0,0.8)]">
                     {theme.line1}
@@ -429,7 +392,7 @@ export const WorkSection: React.FC<WorkSectionProps> = ({
       {/* BOTTOM HUD: "WHAT ARE YOU LOOKING FOR?" & ACTION PILLS */}
       {/* ======================================================== */}
       <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-6 z-30 pt-4 border-t border-white/10 font-mono text-xs">
-        {/* Bottom-Left: "WHAT ARE YOU LOOKING FOR?" + Arrow Filters (EXACT SCREENSHOT MATCH) */}
+        {/* Bottom-Left: "WHAT ARE YOU LOOKING FOR?" + Clean 2-Project Filters */}
         <div className="space-y-2">
           <div className="text-[11px] text-zinc-300 font-bold tracking-widest uppercase flex items-center space-x-2">
             <span>WHAT ARE YOU LOOKING FOR?</span>
@@ -455,37 +418,11 @@ export const WorkSection: React.FC<WorkSectionProps> = ({
                 setActiveIndex(1)
               }}
               className={`text-left flex items-center space-x-1.5 transition-colors cursor-pointer ${
-                activeIndex === 1 ? 'text-[#fb7185] font-bold' : 'text-purple-400 hover:text-white'
+                activeIndex === 1 ? 'text-[#a855f7] font-bold' : 'text-purple-400 hover:text-white'
               }`}
             >
               <span>-&gt;</span>
               <span>D2C E-COMMERCE (VIRGO VISOR)</span>
-            </button>
-
-            <button
-              onClick={() => {
-                sound.hoverBeep()
-                setActiveIndex(2)
-              }}
-              className={`text-left flex items-center space-x-1.5 transition-colors cursor-pointer ${
-                activeIndex === 2 ? 'text-[#c084fc] font-bold' : 'text-purple-400 hover:text-white'
-              }`}
-            >
-              <span>-&gt;</span>
-              <span>PERFORMANCE ADS (NEXUS)</span>
-            </button>
-
-            <button
-              onClick={() => {
-                sound.hoverBeep()
-                setActiveIndex(3)
-              }}
-              className={`text-left flex items-center space-x-1.5 transition-colors cursor-pointer ${
-                activeIndex === 3 ? 'text-[#34d399] font-bold' : 'text-purple-400 hover:text-white'
-              }`}
-            >
-              <span>-&gt;</span>
-              <span>LOCAL 3-PACK SEO (CYBERPULSE)</span>
             </button>
 
             <button
@@ -500,7 +437,7 @@ export const WorkSection: React.FC<WorkSectionProps> = ({
             </button>
           </div>
 
-          {/* Capsule Button: [ ASK ME ANYTHING... ] (Matching Screenshot) */}
+          {/* Capsule Button: [ ASK ME ANYTHING... ] */}
           <div className="pt-2">
             <button
               onClick={() => {
@@ -643,7 +580,7 @@ export const WorkSection: React.FC<WorkSectionProps> = ({
                 {activeProject.id === 'virgovisor' ? (
                   /* VIRGOVISOR.COM SIMULATOR */
                   <div className="font-sans text-xs bg-zinc-950 text-white select-text">
-                    <div className="bg-[#e11d48] text-white py-1 px-3 flex items-center justify-between text-[10px] font-mono">
+                    <div className="bg-[#a855f7] text-white py-1 px-3 flex items-center justify-between text-[10px] font-mono">
                       <div className="flex items-center space-x-1.5 truncate">
                         <Truck className="w-3 h-3 shrink-0" />
                         <span className="font-bold">FREE ALL-INDIA DELIVERY:</span>
@@ -656,7 +593,7 @@ export const WorkSection: React.FC<WorkSectionProps> = ({
 
                     <div className="p-3 bg-zinc-900 border-b border-zinc-800 flex items-center justify-between">
                       <div className="flex items-center space-x-2">
-                        <div className="w-7 h-7 rounded-lg bg-[#e11d48] flex items-center justify-center font-black text-white text-xs">
+                        <div className="w-7 h-7 rounded-lg bg-[#a855f7] flex items-center justify-center font-black text-white text-xs">
                           V
                         </div>
                         <div>
@@ -668,7 +605,7 @@ export const WorkSection: React.FC<WorkSectionProps> = ({
                       </div>
 
                       <div className="flex items-center space-x-2">
-                        <span className="px-2.5 py-1 rounded bg-[#e11d48] text-white font-bold text-[10px] flex items-center space-x-1">
+                        <span className="px-2.5 py-1 rounded bg-[#a855f7] text-white font-bold text-[10px] flex items-center space-x-1">
                           <ShoppingBag className="w-3 h-3" />
                           <span>Store</span>
                         </span>
@@ -676,7 +613,7 @@ export const WorkSection: React.FC<WorkSectionProps> = ({
                     </div>
 
                     <div className="p-6 bg-gradient-to-b from-zinc-900 via-zinc-950 to-black text-center space-y-3">
-                      <span className="inline-block px-2.5 py-0.5 rounded-full bg-[#e11d48]/15 border border-[#e11d48]/40 text-[#f43f5e] text-[10px] font-mono">
+                      <span className="inline-block px-2.5 py-0.5 rounded-full bg-[#a855f7]/15 border border-[#a855f7]/40 text-[#c084fc] text-[10px] font-mono">
                         ✦ OPTICAL-GRADE POLYCARBONATE
                       </span>
 
@@ -688,22 +625,22 @@ export const WorkSection: React.FC<WorkSectionProps> = ({
                         <div className="p-2.5 rounded-xl bg-zinc-900 border border-zinc-800 space-y-1">
                           <div className="font-bold text-white text-[11px]">Clear Optical</div>
                           <div className="text-[9px] text-zinc-400">Day & Night 99%</div>
-                          <div className="text-[#e11d48] font-black text-xs">₹499</div>
+                          <div className="text-[#a855f7] font-black text-xs">₹499</div>
                         </div>
                         <div className="p-2.5 rounded-xl bg-zinc-900 border border-zinc-800 space-y-1">
                           <div className="font-bold text-white text-[11px]">Smoke Tinted</div>
                           <div className="text-[9px] text-zinc-400">Anti-Sun Glare</div>
-                          <div className="text-[#e11d48] font-black text-xs">₹549</div>
+                          <div className="text-[#a855f7] font-black text-xs">₹549</div>
                         </div>
                         <div className="p-2.5 rounded-xl bg-zinc-900 border border-zinc-800 space-y-1">
                           <div className="font-bold text-white text-[11px]">Iridium Mirror</div>
                           <div className="text-[9px] text-zinc-400">Flash Reflective</div>
-                          <div className="text-[#e11d48] font-black text-xs">₹699</div>
+                          <div className="text-[#a855f7] font-black text-xs">₹699</div>
                         </div>
                       </div>
                     </div>
                   </div>
-                ) : activeProject.id === 'paradise' ? (
+                ) : (
                   /* PARADISE PUBLIC SCHOOL SIMULATOR */
                   <div className="font-sans text-xs bg-white text-zinc-900 select-text">
                     <div className="bg-[#1e3a8a] text-white py-1 px-3 flex items-center justify-between text-[10px] font-mono">
@@ -713,49 +650,55 @@ export const WorkSection: React.FC<WorkSectionProps> = ({
 
                     <div className="p-3 bg-white border-b border-zinc-200 flex items-center justify-between">
                       <div className="flex items-center space-x-2">
-                        <img
-                          src="/paradise-logo.svg"
-                          alt="Paradise Logo"
-                          className="w-7 h-7 object-contain"
-                        />
+                        <div className="w-7 h-7 rounded-lg bg-blue-900 text-white flex items-center justify-center font-black text-xs">
+                          P
+                        </div>
                         <div>
-                          <div className="font-['Syne'] font-black text-sm text-blue-950">
+                          <div className="font-['Syne'] font-black text-sm text-zinc-900 tracking-wider">
                             PARADISE PUBLIC SCHOOL
                           </div>
                           <div className="text-[9px] text-zinc-500">Affiliated to CBSE • Estd. 1994</div>
                         </div>
                       </div>
 
-                      <span className="px-2.5 py-1 rounded bg-blue-600 text-white font-bold text-[10px]">
-                        Apply Online
-                      </span>
+                      <div className="flex items-center space-x-2">
+                        <span className="px-2.5 py-1 rounded bg-[#1e3a8a] text-white font-bold text-[10px] flex items-center space-x-1">
+                          <GraduationCap className="w-3 h-3" />
+                          <span>Admissions</span>
+                        </span>
+                      </div>
                     </div>
 
-                    <div className="p-6 bg-blue-50/60 text-center space-y-3">
-                      <span className="inline-block px-2.5 py-0.5 rounded-full bg-blue-100 text-blue-800 text-[10px] font-mono">
-                        ✦ FOUNDATIONAL EXCELLENCE
+                    <div className="p-6 bg-gradient-to-b from-blue-50/50 via-white to-white text-center space-y-3">
+                      <span className="inline-block px-2.5 py-0.5 rounded-full bg-blue-100 text-blue-900 text-[10px] font-mono">
+                        ✦ ATAL INNOVATION &amp; SPORTS TURF
                       </span>
+
                       <h4 className="text-base sm:text-xl font-['Syne'] font-black text-zinc-900 leading-tight">
-                        Empowering Young Minds With Holistic Excellence
+                        Nurturing Tomorrow's Leaders Through Foundational Eminence
                       </h4>
+
                       <p className="text-[11px] text-zinc-600 line-clamp-2 max-w-md mx-auto">
-                        Experiential CBSE curriculum, Atal Jr. STEM lab, spacious sports turf, and Indian sanskar.
+                        32+ Years of Academic Rigor, Atal Tinkering Jr. Labs, World-Class Sports Turf, and Deeply Rooted Indian Values.
                       </p>
-                    </div>
-                  </div>
-                ) : (
-                  /* GENERIC SIMULATOR FOR NEXUS & CYBERPULSE */
-                  <div className="p-6 bg-zinc-950 text-white font-mono space-y-4">
-                    <div className="text-xs text-[#00f0ff] uppercase">{activeProject.category}</div>
-                    <h4 className="text-xl font-['Syne'] font-black">{activeProject.heroTitle}</h4>
-                    <p className="text-xs text-zinc-400 font-sans">{activeProject.description}</p>
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2">
-                      {activeProject.metrics.map((m, i) => (
-                        <div key={i} className="p-3 rounded-xl bg-zinc-900 border border-zinc-800">
-                          <div className="text-lg font-black" style={{ color: m.color }}>{m.value}</div>
-                          <div className="text-[9px] text-zinc-400 uppercase">{m.label}</div>
+
+                      <div className="grid grid-cols-3 gap-2 pt-2 text-left">
+                        <div className="p-2.5 rounded-xl bg-blue-50 border border-blue-100 space-y-1">
+                          <div className="font-bold text-zinc-900 text-[11px]">Admissions</div>
+                          <div className="text-[9px] text-zinc-500">Nur to Class 8</div>
+                          <div className="text-[#00f0ff] font-black text-xs">OPEN</div>
                         </div>
-                      ))}
+                        <div className="p-2.5 rounded-xl bg-blue-50 border border-blue-100 space-y-1">
+                          <div className="font-bold text-zinc-900 text-[11px]">Google 3-Pack</div>
+                          <div className="text-[9px] text-zinc-500">Local Area</div>
+                          <div className="text-blue-900 font-black text-xs">#1 RANK</div>
+                        </div>
+                        <div className="p-2.5 rounded-xl bg-blue-50 border border-blue-100 space-y-1">
+                          <div className="font-bold text-zinc-900 text-[11px]">Student App</div>
+                          <div className="text-[9px] text-zinc-500">Live Portal</div>
+                          <div className="text-blue-900 font-black text-xs">ACTIVE</div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 )}

@@ -734,7 +734,7 @@ export const ProjectFrontPageModal: React.FC<ProjectFrontPageModalProps> = ({
                 </section>
               </div>
             ) : (
-              /* High-Fidelity Front Page Simulator for Nexus & Cyberpulse */
+              /* Fallback Project Front Page Simulator */
               <div className="p-8 sm:p-12 text-zinc-100 font-mono bg-zinc-950 space-y-8 select-text">
                 <div className="border-b border-zinc-800 pb-6 space-y-3">
                   <div className="inline-flex items-center space-x-2 text-xs text-[#00f0ff] uppercase tracking-widest">
@@ -815,3 +815,4 @@ export const ProjectFrontPageModal: React.FC<ProjectFrontPageModalProps> = ({
     </div>
   )
 }
+
