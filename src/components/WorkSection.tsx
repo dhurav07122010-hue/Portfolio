@@ -12,6 +12,10 @@ import {
   ChevronUp,
   Monitor,
   Cpu,
+  Layers,
+  Sparkles,
+  Truck,
+  ArrowRight,
 } from 'lucide-react'
 import { sound } from '../utils/soundEngine'
 import { scrollEngine } from '../utils/scrollEngine'
@@ -26,7 +30,7 @@ interface WorkSectionProps {
 }
 
 type DeviceMode = 'desktop' | 'tablet' | 'mobile'
-type CardViewMode = 'frontpage' | 'reticle'
+type CardViewMode = 'frontpage' | 'liveframe' | 'reticle'
 
 export const WorkSection: React.FC<WorkSectionProps> = ({
   onOpenTerminal,
@@ -238,7 +242,7 @@ export const WorkSection: React.FC<WorkSectionProps> = ({
         ref={stageRef}
         onMouseMove={handleStageMouseMove}
         onMouseLeave={handleStageMouseLeave}
-        className="relative w-full h-[450px] sm:h-[490px] md:h-[520px] flex items-center justify-center my-4 perspective-[1400px] overflow-visible"
+        className="relative w-full h-[470px] sm:h-[500px] md:h-[530px] flex items-center justify-center my-4 perspective-[1400px] overflow-visible"
         style={{ perspective: '1400px', transformStyle: 'preserve-3d' }}
       >
         {PROJECTS_DATA.map((proj, idx) => {
@@ -270,9 +274,7 @@ export const WorkSection: React.FC<WorkSectionProps> = ({
             <div
               key={proj.id}
               onClick={() => {
-                if (isCenter) {
-                  openLiveWebsite(proj.url)
-                } else {
+                if (!isCenter) {
                   sound.hoverBeep()
                   setActiveIndex(idx)
                 }
@@ -285,7 +287,7 @@ export const WorkSection: React.FC<WorkSectionProps> = ({
                 transition: 'transform 0.75s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease-out',
                 boxShadow: isCenter ? theme.glowShadow : 'none',
               }}
-              className={`absolute w-[92vw] max-w-[540px] sm:max-w-[620px] md:max-w-[660px] h-[380px] sm:h-[410px] md:h-[440px] rounded-[30px] sm:rounded-[36px] border-2 ${
+              className={`absolute w-[92vw] max-w-[540px] sm:max-w-[620px] md:max-w-[660px] h-[390px] sm:h-[420px] md:h-[450px] rounded-[30px] sm:rounded-[36px] border-2 ${
                 theme.borderColor
               } bg-gradient-to-b from-black/95 via-[#080b14]/90 to-black/95 backdrop-blur-2xl p-5 sm:p-7 flex flex-col justify-between cursor-pointer group transition-shadow duration-500 overflow-hidden`}
             >
@@ -315,10 +317,10 @@ export const WorkSection: React.FC<WorkSectionProps> = ({
                   </span>
                 </div>
 
-                {/* View Mode Toggle Pill on Card */}
+                {/* View Mode Toggle Pill on Center Card */}
                 {isCenter && (
                   <div
-                    className="flex items-center bg-black/70 rounded-full border border-white/15 p-0.5"
+                    className="flex items-center bg-black/80 rounded-full border border-white/15 p-0.5 space-x-0.5"
                     onClick={(e) => e.stopPropagation()}
                   >
                     <button
@@ -326,12 +328,12 @@ export const WorkSection: React.FC<WorkSectionProps> = ({
                         sound.hoverBeep()
                         setCardViewMode('frontpage')
                       }}
-                      className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold transition-all flex items-center space-x-1 ${
+                      className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold transition-all flex items-center space-x-1 cursor-pointer ${
                         cardViewMode === 'frontpage'
                           ? 'bg-[#00f0ff] text-black shadow-[0_0_8px_#00f0ff]'
                           : 'text-zinc-400 hover:text-white'
                       }`}
-                      title="Show Live Front Page"
+                      title="Show Authentic Front Page"
                     >
                       <Monitor className="w-2.5 h-2.5" />
                       <span>FRONT PAGE</span>
@@ -339,9 +341,24 @@ export const WorkSection: React.FC<WorkSectionProps> = ({
                     <button
                       onClick={() => {
                         sound.hoverBeep()
+                        setCardViewMode('liveframe')
+                      }}
+                      className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold transition-all flex items-center space-x-1 cursor-pointer ${
+                        cardViewMode === 'liveframe'
+                          ? 'bg-[#00f0ff] text-black shadow-[0_0_8px_#00f0ff]'
+                          : 'text-zinc-400 hover:text-white'
+                      }`}
+                      title="Show Live Web View"
+                    >
+                      <Layers className="w-2.5 h-2.5" />
+                      <span>LIVE WEB</span>
+                    </button>
+                    <button
+                      onClick={() => {
+                        sound.hoverBeep()
                         setCardViewMode('reticle')
                       }}
-                      className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold transition-all flex items-center space-x-1 ${
+                      className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold transition-all flex items-center space-x-1 cursor-pointer ${
                         cardViewMode === 'reticle'
                           ? 'bg-[#00f0ff] text-black shadow-[0_0_8px_#00f0ff]'
                           : 'text-zinc-400 hover:text-white'
@@ -356,35 +373,192 @@ export const WorkSection: React.FC<WorkSectionProps> = ({
               </div>
 
               {/* ======================================================== */}
-              {/* CENTER DISPLAY: EITHER LIVE WEBSITE FRONT PAGE OR RETICLE */}
+              {/* CENTER DISPLAY: AUTHENTIC FRONT PAGE, LIVE FRAME, OR HUD */}
               {/* ======================================================== */}
               {isCenter && cardViewMode === 'frontpage' ? (
-                /* 100% REAL AUTHENTIC LIVE FRONT PAGE OF THE WEBSITE VIA SCALED IFRAME */
-                <div className="relative my-auto w-full h-[230px] sm:h-[260px] md:h-[280px] rounded-2xl overflow-hidden border border-white/20 bg-zinc-950 shadow-2xl z-10 group/preview">
+                /* AUTHENTIC 100% VISIBLE INSTANT FRONT PAGE DISPLAY (OPENS WEBSITE ON CLICK) */
+                <a
+                  href={proj.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => sound.playChirp()}
+                  className="relative my-auto w-full rounded-2xl overflow-hidden border border-white/20 bg-zinc-950 shadow-2xl z-10 group/preview block text-left transition-transform duration-300 hover:scale-[1.01]"
+                  title={`Click to open ${proj.url} in new tab`}
+                >
+                  {proj.id === 'paradise' ? (
+                    /* PARADISE PUBLIC SCHOOL AUTHENTIC FRONT PAGE */
+                    <div className="flex flex-col bg-slate-950 text-white font-sans text-xs select-none">
+                      {/* Notice Ticker */}
+                      <div className="bg-[#1e3a8a] px-3 py-1 text-[9px] sm:text-[10px] font-medium flex items-center justify-between border-b border-blue-900/60">
+                        <div className="flex items-center space-x-1.5 truncate">
+                          <span className="w-1.5 h-1.5 rounded-full bg-yellow-400 animate-ping shrink-0" />
+                          <span className="font-bold tracking-wide text-yellow-300">ADMISSIONS OPEN (2026-27):</span>
+                          <span className="truncate text-blue-100">Nursery to Class 8 • CBSE English Medium</span>
+                        </div>
+                        <span className="hidden sm:inline text-[9px] text-blue-200 font-mono">
+                          Affiliation #2130842
+                        </span>
+                      </div>
+
+                      {/* Header */}
+                      <div className="bg-white px-3 py-2 flex items-center justify-between text-zinc-900 border-b border-zinc-200">
+                        <div className="flex items-center space-x-2">
+                          <img src="/paradise-logo.svg" alt="Paradise Logo" className="w-6 h-6 object-contain" />
+                          <div>
+                            <div className="font-['Syne'] font-black text-xs sm:text-sm text-blue-950 tracking-tight leading-none">
+                              PARADISE PUBLIC SCHOOL
+                            </div>
+                            <div className="text-[8px] text-zinc-500 font-medium">Yamuna Vihar, Delhi • Estd. 1994</div>
+                          </div>
+                        </div>
+                        <div className="flex items-center space-x-2 text-[10px] font-bold">
+                          <span className="hidden sm:inline text-blue-900">ERP Portal</span>
+                          <span className="px-2 py-0.5 rounded bg-blue-600 text-white text-[9px] font-mono">
+                            APPLY NOW ↗
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Hero Campus Banner */}
+                      <div className="relative h-[115px] sm:h-[130px] bg-gradient-to-r from-blue-950 via-slate-900 to-blue-950 overflow-hidden flex items-center p-3 sm:p-4">
+                        <img
+                          src="/paradise-hero.png"
+                          alt="Campus"
+                          className="absolute inset-0 w-full h-full object-cover opacity-35 mix-blend-luminosity"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-r from-blue-950/90 via-blue-950/70 to-transparent" />
+                        <div className="relative z-10 space-y-1 max-w-[90%]">
+                          <span className="inline-block px-2 py-0.5 rounded-full bg-[#00f0ff]/20 border border-[#00f0ff]/40 text-[#00f0ff] font-mono text-[9px] font-bold">
+                            CBSE INSTITUTION // ESTD. 1994
+                          </span>
+                          <div className="font-['Syne'] font-black text-sm sm:text-base text-white tracking-tight leading-tight">
+                            NURTURING MINDS, INSPIRING EXCELLENCE
+                          </div>
+                          <p className="text-[10px] text-zinc-300 line-clamp-1 font-sans">
+                            Atal Tinkering STEM Labs • 100% Board Pass Rate • Sports Arena
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Stats Strip */}
+                      <div className="grid grid-cols-3 bg-zinc-900 text-white text-[9px] font-mono py-2 px-3 border-t border-zinc-800 text-center">
+                        <div>
+                          <span className="text-[#00f0ff] font-bold block">32+ YEARS</span>
+                          <span className="text-zinc-400 text-[8px]">Academic Rigor</span>
+                        </div>
+                        <div className="border-x border-zinc-800">
+                          <span className="text-emerald-400 font-bold block">+340% SURGE</span>
+                          <span className="text-zinc-400 text-[8px]">Online Inquiries</span>
+                        </div>
+                        <div>
+                          <span className="text-[#00f0ff] font-bold block">#1 GOOGLE 3-PACK</span>
+                          <span className="text-zinc-400 text-[8px]">Yamuna Vihar</span>
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    /* VIRGO VISOR AUTHENTIC FRONT PAGE */
+                    <div className="flex flex-col bg-zinc-950 text-white font-sans text-xs select-none">
+                      {/* Shipping Banner */}
+                      <div className="bg-[#a855f7] px-3 py-1 text-[9px] sm:text-[10px] font-mono font-bold flex items-center justify-between border-b border-purple-900">
+                        <div className="flex items-center space-x-1.5 truncate">
+                          <Truck className="w-3 h-3 shrink-0" />
+                          <span>ALL-INDIA FREE DELIVERY:</span>
+                          <span className="truncate font-normal">Instant UPI &amp; COD Available</span>
+                        </div>
+                        <span className="hidden sm:inline text-[9px] bg-black/30 px-1.5 py-0.5 rounded text-white">
+                          DISPATCH &lt;24H
+                        </span>
+                      </div>
+
+                      {/* Header */}
+                      <div className="bg-zinc-900 px-3 py-2 flex items-center justify-between border-b border-zinc-800">
+                        <div className="flex items-center space-x-2">
+                          <img src="/virgovisor-favicon.png" alt="Virgo Visor Logo" className="w-5 h-5 rounded-full object-contain" />
+                          <div>
+                            <div className="font-['Syne'] font-black text-xs sm:text-sm tracking-tight leading-none text-white">
+                              VIRGO VISOR
+                            </div>
+                            <div className="text-[8px] text-zinc-400 font-mono">By Vishnu Enterprises • D2C Gear</div>
+                          </div>
+                        </div>
+                        <div className="flex items-center space-x-2 text-[10px] font-mono">
+                          <span className="text-[#c084fc] font-bold hidden sm:inline">48+ Helmet Models</span>
+                          <span className="px-2 py-0.5 rounded bg-[#a855f7] text-black font-bold text-[9px]">
+                            STORE ↗
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Hero Showcase */}
+                      <div className="relative h-[95px] sm:h-[105px] bg-gradient-to-r from-purple-950/80 via-zinc-950 to-purple-950/80 p-3 flex flex-col justify-center space-y-1 border-b border-zinc-800/80">
+                        <div className="inline-flex items-center space-x-1.5 text-[9px] font-mono text-[#c084fc]">
+                          <Sparkles className="w-2.5 h-2.5" />
+                          <span>OPTICAL-GRADE POLYCARBONATE CLASS 1</span>
+                        </div>
+                        <div className="font-['Syne'] font-black text-xs sm:text-sm text-white uppercase tracking-tight">
+                          Crystal Clear Vision. Hard-Coat Scratch Defense.
+                        </div>
+                        <p className="text-[9px] text-zinc-400 line-clamp-1 font-mono">
+                          Vega Bolt • Steelbird SBA-2 • Studds Ninja • LS2 Rapid
+                        </p>
+                      </div>
+
+                      {/* Product Catalog Cards */}
+                      <div className="grid grid-cols-3 gap-1.5 p-2 bg-zinc-950 font-mono text-[9px]">
+                        <div className="p-1.5 rounded-lg bg-zinc-900 border border-zinc-800 text-center">
+                          <div className="font-bold text-white text-[10px] truncate">Clear Optical</div>
+                          <div className="text-zinc-400 text-[8px]">99% Day/Night</div>
+                          <div className="text-[#a855f7] font-black text-[10px]">₹349</div>
+                        </div>
+                        <div className="p-1.5 rounded-lg bg-zinc-900 border border-zinc-800 text-center">
+                          <div className="font-bold text-white text-[10px] truncate">Smoke Tint</div>
+                          <div className="text-zinc-400 text-[8px]">Sun-Glare Shield</div>
+                          <div className="text-[#a855f7] font-black text-[10px]">₹429</div>
+                        </div>
+                        <div className="p-1.5 rounded-lg bg-zinc-900 border border-zinc-800 text-center">
+                          <div className="font-bold text-white text-[10px] truncate">Iridium Mirror</div>
+                          <div className="text-zinc-400 text-[8px]">Flash Reflective</div>
+                          <div className="text-[#a855f7] font-black text-[10px]">₹499</div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Hover Overlay with Direct CTA */}
+                  <div className="absolute inset-0 bg-black/0 group-hover/preview:bg-black/40 transition-colors flex items-center justify-center pointer-events-none">
+                    <span className="opacity-0 group-hover/preview:opacity-100 transition-opacity px-5 py-2 rounded-xl bg-black/90 border border-[#00f0ff] text-[#00f0ff] font-mono text-xs font-bold shadow-2xl flex items-center space-x-2">
+                      <span>OPEN {proj.displayUrl.toUpperCase()} ↗</span>
+                    </span>
+                  </div>
+                </a>
+              ) : isCenter && cardViewMode === 'liveframe' ? (
+                /* LIVE EMBEDDED IFRAME (DIRECT UNSANDBOXED WEB VIEW) */
+                <div className="relative my-auto w-full h-[240px] sm:h-[270px] md:h-[290px] rounded-2xl overflow-hidden border border-white/20 bg-zinc-950 shadow-2xl z-10 group/preview">
                   <iframe
                     key={`card-iframe-${proj.id}-${refreshKey}`}
                     src={proj.url}
-                    title={`${proj.title} Live Front Page`}
-                    className="w-[1280px] h-[760px] border-0 origin-top-left pointer-events-none select-none bg-zinc-950"
-                    style={{
-                      transform: 'scale(0.44)',
-                      width: '228%',
-                      height: '228%',
-                    }}
+                    title={`${proj.title} Live Web View`}
+                    allow="autoplay; fullscreen"
+                    className="w-full h-full border-0 bg-zinc-950"
                     loading="eager"
                   />
-                  {/* Click overlay to open real live website */}
-                  <div
+                  {/* Clean native link overlay to open real live website */}
+                  <a
+                    href={proj.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     onClick={(e) => {
                       e.stopPropagation()
-                      openLiveWebsite(proj.url)
+                      sound.playChirp()
                     }}
-                    className="absolute inset-0 bg-transparent hover:bg-black/30 transition-all flex items-center justify-center cursor-pointer group-hover/preview:backdrop-blur-[1.5px]"
+                    className="absolute inset-0 z-20 bg-transparent hover:bg-black/35 transition-all flex items-center justify-center cursor-pointer group-hover/preview:backdrop-blur-[1px]"
+                    title={`Click to open ${proj.url} in new tab`}
                   >
                     <span className="opacity-0 group-hover/preview:opacity-100 transition-opacity px-5 py-2.5 rounded-xl bg-black/90 border border-[#00f0ff] text-[#00f0ff] font-mono text-xs font-bold shadow-2xl flex items-center space-x-2">
                       <span>OPEN {proj.displayUrl.toUpperCase()} ↗</span>
                     </span>
-                  </div>
+                  </a>
                 </div>
               ) : (
                 /* 3D HOLOGRAPHIC RETICLE DISPLAY */
@@ -430,17 +604,20 @@ export const WorkSection: React.FC<WorkSectionProps> = ({
                   </span>
                 </div>
 
-                <button
+                <a
+                  href={proj.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   onClick={(e) => {
                     e.stopPropagation()
-                    openLiveWebsite(proj.url)
+                    sound.playChirp()
                   }}
                   onMouseEnter={() => sound.hoverBeep()}
-                  className="px-4 py-2 rounded-xl bg-white/10 hover:bg-[#00f0ff] text-white hover:text-black font-bold text-[11px] transition-all flex items-center space-x-1.5 cursor-pointer shadow-md group/btn"
+                  className="px-4 py-2 rounded-xl bg-[#00f0ff] hover:bg-white text-black font-bold text-[11px] transition-all flex items-center space-x-1.5 cursor-pointer shadow-md group/btn"
                 >
-                  <span>OPEN LIVE WEBSITE</span>
+                  <span>VISIT LIVE WEBSITE</span>
                   <ExternalLink className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 transition-transform" />
-                </button>
+                </a>
               </div>
             </div>
           )
@@ -530,14 +707,17 @@ export const WorkSection: React.FC<WorkSectionProps> = ({
             <span>{showInlineBrowser ? 'HIDE INTERACTIVE BROWSER' : 'SHOW INTERACTIVE BROWSER'}</span>
           </button>
 
-          <button
-            onClick={() => openLiveWebsite(activeProject.url)}
+          <a
+            href={activeProject.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => sound.playChirp()}
             onMouseEnter={() => sound.hoverBeep()}
             className="px-5 py-2.5 rounded-2xl bg-[#00f0ff] text-black font-bold hover:bg-white transition-all flex items-center space-x-2 cursor-pointer shadow-[0_0_25px_rgba(0,240,255,0.4)] text-xs"
           >
             <span>VISIT {activeProject.displayUrl.toUpperCase()}</span>
             <ExternalLink className="w-4 h-4" />
-          </button>
+          </a>
         </div>
       </div>
 
@@ -558,22 +738,25 @@ export const WorkSection: React.FC<WorkSectionProps> = ({
                 </span>
               </div>
 
-              {/* URL Bar */}
-              <div
-                onClick={() => openLiveWebsite(activeProject.url)}
+              {/* URL Bar (Click to open website in new tab) */}
+              <a
+                href={activeProject.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => sound.playChirp()}
                 className="flex-1 max-w-sm mx-auto flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-black/60 border border-white/15 text-[11px] text-zinc-200 cursor-pointer hover:border-[#00f0ff]/50 transition-colors"
                 title="Click to open website in new tab"
               >
                 <Lock className="w-3 h-3 text-emerald-400 shrink-0" />
                 <span className="truncate">{activeProject.url}</span>
                 <ExternalLink className="w-3 h-3 text-zinc-500 ml-auto shrink-0" />
-              </div>
+              </a>
 
               {/* Device Mode Switcher & Refresh */}
               <div className="flex items-center space-x-2">
                 <button
                   onClick={handleRefresh}
-                  className={`p-1.5 rounded-lg border border-white/10 bg-black/40 text-zinc-400 hover:text-white transition-colors ${
+                  className={`p-1.5 rounded-lg border border-white/10 bg-black/40 text-zinc-400 hover:text-white transition-colors cursor-pointer ${
                     isRefreshing ? 'animate-spin' : ''
                   }`}
                   title="Reload Live Frame"
@@ -587,7 +770,7 @@ export const WorkSection: React.FC<WorkSectionProps> = ({
                       sound.hoverBeep()
                       setDeviceMode('desktop')
                     }}
-                    className={`p-1 rounded ${
+                    className={`p-1 rounded cursor-pointer ${
                       deviceMode === 'desktop' ? 'bg-[#00f0ff] text-black' : 'hover:text-white'
                     }`}
                     title="Desktop Mode"
@@ -599,7 +782,7 @@ export const WorkSection: React.FC<WorkSectionProps> = ({
                       sound.hoverBeep()
                       setDeviceMode('tablet')
                     }}
-                    className={`p-1 rounded ${
+                    className={`p-1 rounded cursor-pointer ${
                       deviceMode === 'tablet' ? 'bg-[#00f0ff] text-black' : 'hover:text-white'
                     }`}
                     title="Tablet Mode"
@@ -611,7 +794,7 @@ export const WorkSection: React.FC<WorkSectionProps> = ({
                       sound.hoverBeep()
                       setDeviceMode('mobile')
                     }}
-                    className={`p-1 rounded ${
+                    className={`p-1 rounded cursor-pointer ${
                       deviceMode === 'mobile' ? 'bg-[#00f0ff] text-black' : 'hover:text-white'
                     }`}
                     title="Mobile Mode"
@@ -631,6 +814,7 @@ export const WorkSection: React.FC<WorkSectionProps> = ({
                   key={`full-frame-${activeProject.id}-${deviceMode}-${refreshKey}`}
                   src={activeProject.url}
                   title={`${activeProject.title} Live Website`}
+                  allow="autoplay; fullscreen"
                   className="w-full h-[620px] border-0 bg-zinc-950"
                   loading="lazy"
                 />

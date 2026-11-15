@@ -322,10 +322,17 @@ export const ThreeCanvas: React.FC<ThreeCanvasProps> = () => {
 
     const handleMouseDown = (e: MouseEvent) => {
       const target = e.target as HTMLElement | null
-      if (target?.closest('button, a, input, textarea, select')) return
+      if (
+        !target ||
+        target.closest(
+          '#work, #about, #marketing, #contact, nav, header, footer, button, a, input, textarea, select, [role="button"], [data-interactive]'
+        ) ||
+        !target.closest('#hero')
+      ) {
+        return
+      }
       mouse.isDown = true
       setIsWarping(true)
-      sound.playGlitch()
     }
 
     const handleMouseUp = () => {
@@ -376,13 +383,13 @@ export const ThreeCanvas: React.FC<ThreeCanvasProps> = () => {
 
       const absVelocity = Math.abs(scroll.velocity)
 
-      // Hyperdrive calculation
+      // Hyperdrive calculation (Smooth and stable without jarring snaps)
       if (mouse.isDown || currentMode === 'warp') {
-        warpFactor = THREE.MathUtils.lerp(warpFactor, 4.5, 0.08)
-      } else if (absVelocity > 15) {
-        warpFactor = THREE.MathUtils.lerp(warpFactor, Math.min(3.5, 1 + absVelocity * 0.08), 0.08)
+        warpFactor = THREE.MathUtils.lerp(warpFactor, 3.2, 0.06)
+      } else if (absVelocity > 25) {
+        warpFactor = THREE.MathUtils.lerp(warpFactor, 1.8, 0.05)
       } else {
-        warpFactor = THREE.MathUtils.lerp(warpFactor, 1, 0.06)
+        warpFactor = THREE.MathUtils.lerp(warpFactor, 1, 0.05)
       }
 
       // SKELETAL VERTEBRAL CURVATURE PROPAGATION
@@ -462,9 +469,9 @@ export const ThreeCanvas: React.FC<ThreeCanvasProps> = () => {
         0.05
       )
 
-      // Dynamic FOV hyperspace expansion on scroll velocity
-      const targetFov = 62 + Math.min(10, Math.abs(scroll.velocity) * 0.35)
-      camera.fov = THREE.MathUtils.lerp(camera.fov, targetFov, 0.08)
+      // Gentle FOV expansion on momentum (damped to prevent camera jerking)
+      const targetFov = 62 + Math.min(3.5, Math.abs(scroll.velocity) * 0.08)
+      camera.fov = THREE.MathUtils.lerp(camera.fov, targetFov, 0.06)
       camera.updateProjectionMatrix()
 
       camera.lookAt(spineLookTarget.x, spineLookTarget.y - 10, spineLookTarget.z)
