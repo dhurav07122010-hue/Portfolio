@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
-import { sound } from '../utils/soundEngine'
 import { scrollEngine } from '../utils/scrollEngine'
 
 export type VisualMode = 'spine' | 'vortex' | 'warp'

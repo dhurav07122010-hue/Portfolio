@@ -15,7 +15,6 @@ import {
   Layers,
   Sparkles,
   Truck,
-  ArrowRight,
 } from 'lucide-react'
 import { sound } from '../utils/soundEngine'
 import { scrollEngine } from '../utils/scrollEngine'
@@ -44,11 +43,6 @@ export const WorkSection: React.FC<WorkSectionProps> = ({
   const stageRef = useRef<HTMLDivElement>(null)
 
   const activeProject: ProjectData = PROJECTS_DATA[activeIndex] || PROJECTS_DATA[0]
-
-  const openLiveWebsite = (url: string = activeProject.url) => {
-    sound.playChirp()
-    window.open(url, '_blank', 'noopener,noreferrer')
-  }
 
   const handleNext = () => {
     sound.hoverBeep()
