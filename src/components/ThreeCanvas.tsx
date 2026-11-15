@@ -46,7 +46,7 @@ export const ThreeCanvas: React.FC<ThreeCanvasProps> = () => {
       powerPreference: 'high-performance',
     })
     renderer.setSize(window.innerWidth, window.innerHeight)
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5))
     container.appendChild(renderer.domElement)
 
     // ==========================================
@@ -72,7 +72,7 @@ export const ThreeCanvas: React.FC<ThreeCanvasProps> = () => {
     const spineCurve = new THREE.CatmullRomCurve3(initialPoints, false, 'centripetal')
 
     // Continuous Glowing Spinal Cord Tube
-    const tubeGeometry = new THREE.TubeGeometry(spineCurve, 120, 2.2, 8, false)
+    const tubeGeometry = new THREE.TubeGeometry(spineCurve, 70, 2.2, 6, false)
     const tubeMaterial = new THREE.MeshBasicMaterial({
       color: 0x00f0ff,
       wireframe: true,
@@ -83,7 +83,7 @@ export const ThreeCanvas: React.FC<ThreeCanvasProps> = () => {
     spineGroup.add(spinalCordMesh)
 
     // Secondary Inner Laser Nerve Core
-    const nerveLineGeo = new THREE.BufferGeometry().setFromPoints(spineCurve.getPoints(120))
+    const nerveLineGeo = new THREE.BufferGeometry().setFromPoints(spineCurve.getPoints(80))
     const nerveLineMat = new THREE.LineBasicMaterial({
       color: 0xffffff,
       transparent: true,
@@ -134,7 +134,7 @@ export const ThreeCanvas: React.FC<ThreeCanvasProps> = () => {
       opacity: 0.5,
     })
 
-    const jointGeo = new THREE.SphereGeometry(1.6, 8, 8)
+    const jointGeo = new THREE.SphereGeometry(1.6, 6, 6)
     const jointMat = new THREE.MeshBasicMaterial({ color: 0x00f0ff })
 
     for (let i = 0; i < vertebraeCount; i++) {
@@ -192,8 +192,8 @@ export const ThreeCanvas: React.FC<ThreeCanvasProps> = () => {
     }
 
     // Traveling Neural Synaptic Impulses (Luminous Photon Packets)
-    const impulseCount = 4
-    const impulseGeo = new THREE.SphereGeometry(3.5, 12, 12)
+    const impulseCount = 3
+    const impulseGeo = new THREE.SphereGeometry(3, 8, 8)
     const impulseMat = new THREE.MeshBasicMaterial({
       color: 0xffffff,
       transparent: true,
@@ -204,7 +204,7 @@ export const ThreeCanvas: React.FC<ThreeCanvasProps> = () => {
     for (let i = 0; i < impulseCount; i++) {
       const imp = new THREE.Mesh(impulseGeo, impulseMat)
       const glowOrb = new THREE.Mesh(
-        new THREE.SphereGeometry(7, 8, 8),
+        new THREE.SphereGeometry(6, 6, 6),
         new THREE.MeshBasicMaterial({
           color: 0x00f0ff,
           wireframe: true,
@@ -218,9 +218,9 @@ export const ThreeCanvas: React.FC<ThreeCanvasProps> = () => {
     }
 
     // ==========================================
-    // 2. SURROUNDING AMBIENT PARTICLES
+    // 2. SURROUNDING AMBIENT PARTICLES (OPTIMIZED)
     // ==========================================
-    const particleCount = 2800
+    const particleCount = 1200
     const geometry = new THREE.BufferGeometry()
     const positions = new Float32Array(particleCount * 3)
     const originalPositions = new Float32Array(particleCount * 3)
@@ -228,7 +228,7 @@ export const ThreeCanvas: React.FC<ThreeCanvasProps> = () => {
 
     const cyanColor = new THREE.Color(0x00f0ff)
     const purpleColor = new THREE.Color(0xa855f7)
-    const emeraldColor = new THREE.Color(0x10b981)
+    const emeraldColor = new THREE.Color(0x00f0ff)
 
     for (let i = 0; i < particleCount; i++) {
       const i3 = i * 3
@@ -262,17 +262,17 @@ export const ThreeCanvas: React.FC<ThreeCanvasProps> = () => {
 
     // Particle Texture
     const pCanvas = document.createElement('canvas')
-    pCanvas.width = 64
-    pCanvas.height = 64
+    pCanvas.width = 32
+    pCanvas.height = 32
     const pCtx = pCanvas.getContext('2d')
     if (pCtx) {
-      const gradient = pCtx.createRadialGradient(32, 32, 0, 32, 32, 32)
+      const gradient = pCtx.createRadialGradient(16, 16, 0, 16, 16, 16)
       gradient.addColorStop(0, 'rgba(255, 255, 255, 1)')
-      gradient.addColorStop(0.2, 'rgba(0, 240, 255, 0.95)')
-      gradient.addColorStop(0.6, 'rgba(168, 85, 247, 0.35)')
+      gradient.addColorStop(0.25, 'rgba(0, 240, 255, 0.95)')
+      gradient.addColorStop(0.65, 'rgba(168, 85, 247, 0.35)')
       gradient.addColorStop(1, 'rgba(0, 0, 0, 0)')
       pCtx.fillStyle = gradient
-      pCtx.fillRect(0, 0, 64, 64)
+      pCtx.fillRect(0, 0, 32, 32)
     }
     const particleTexture = new THREE.CanvasTexture(pCanvas)
 
@@ -290,9 +290,9 @@ export const ThreeCanvas: React.FC<ThreeCanvasProps> = () => {
     scene.add(particleSystem)
 
     // 3. Cybernetic Laser Floor
-    const gridHelper = new THREE.GridHelper(1600, 50, 0x00f0ff, 0x181828)
+    const gridHelper = new THREE.GridHelper(1600, 40, 0x00f0ff, 0x181828)
     gridHelper.position.y = -280
-    gridHelper.material.opacity = 0.3
+    gridHelper.material.opacity = 0.25
     gridHelper.material.transparent = true
     scene.add(gridHelper)
 
@@ -355,6 +355,7 @@ export const ThreeCanvas: React.FC<ThreeCanvasProps> = () => {
     let animationFrameId: number
     const clock = new THREE.Clock()
     let warpFactor = 1
+    let frameCount = 0
 
     const upVector = new THREE.Vector3(0, 1, 0)
     const tangentVector = new THREE.Vector3()
@@ -362,6 +363,7 @@ export const ThreeCanvas: React.FC<ThreeCanvasProps> = () => {
 
     const animate = () => {
       animationFrameId = requestAnimationFrame(animate)
+      frameCount++
       const elapsedTime = clock.getElapsedTime()
 
       // Smooth interpolation for mouse and scroll
@@ -404,13 +406,15 @@ export const ThreeCanvas: React.FC<ThreeCanvasProps> = () => {
       spineCurve.points = initialPoints
       spineCurve.updateArcLengths()
 
-      // Update tube geometry
-      const updatedTubeGeo = new THREE.TubeGeometry(spineCurve, 120, 2.2, 8, false)
-      spinalCordMesh.geometry.dispose()
-      spinalCordMesh.geometry = updatedTubeGeo
+      // Update tube geometry throttled every 3 frames to avoid GC stalls
+      if (frameCount % 3 === 0) {
+        const updatedTubeGeo = new THREE.TubeGeometry(spineCurve, 70, 2.2, 6, false)
+        spinalCordMesh.geometry.dispose()
+        spinalCordMesh.geometry = updatedTubeGeo
+      }
 
       // Update inner nerve line
-      const updatedLinePoints = spineCurve.getPoints(120)
+      const updatedLinePoints = spineCurve.getPoints(80)
       nerveLineMesh.geometry.setFromPoints(updatedLinePoints)
 
       // Align and Orient all 46 Vertebrae along the curve
@@ -465,8 +469,10 @@ export const ThreeCanvas: React.FC<ThreeCanvasProps> = () => {
 
       camera.lookAt(spineLookTarget.x, spineLookTarget.y - 10, spineLookTarget.z)
 
-      // Surrounding Particles reactive wave
+      // Surrounding Particles reactive wave (Optimized vector math)
       const posArray = geometry.attributes.position.array as Float32Array
+      const spineCenter = spineCurve.getPointAt(0.5)
+
       for (let i = 0; i < particleCount; i++) {
         const i3 = i * 3
         const origX = originalPositions[i3]
@@ -474,22 +480,22 @@ export const ThreeCanvas: React.FC<ThreeCanvasProps> = () => {
         const origZ = originalPositions[i3 + 2]
 
         let curX = origX
-        let curY = origY + Math.sin(elapsedTime * 1.5 + origX * 0.02 + p * 8) * 12
+        let curY = origY + Math.sin(elapsedTime * 1.5 + origX * 0.02 + p * 8) * 10
         let curZ = origZ
 
         if (absVelocity > 6) {
-          curZ += (scroll.velocity > 0 ? 1 : -1) * Math.sin(i) * absVelocity * 0.5
+          curZ += (scroll.velocity > 0 ? 1 : -1) * Math.sin(i) * absVelocity * 0.4
         }
 
-        const spineCenter = spineCurve.getPointAt(0.5)
         const dx = curX - spineCenter.x
         const dy = curY - spineCenter.y
         const distSq = dx * dx + dy * dy
 
-        if (distSq < 14000 && distSq > 1) {
-          const force = (1 - distSq / 14000) * 6
-          curX += (dx / Math.sqrt(distSq)) * force
-          curY += (dy / Math.sqrt(distSq)) * force
+        if (distSq < 12000 && distSq > 1) {
+          const force = (1 - distSq / 12000) * 5
+          const invDist = 1 / Math.sqrt(distSq)
+          curX += dx * invDist * force
+          curY += dy * invDist * force
         }
 
         posArray[i3] = curX
@@ -548,7 +554,7 @@ export const ThreeCanvas: React.FC<ThreeCanvasProps> = () => {
       {isWarping && (
         <div className="fixed bottom-10 left-1/2 -translate-x-1/2 z-30 pointer-events-none font-mono text-xs px-4 py-1.5 rounded-full bg-[#00f0ff]/10 border border-[#00f0ff]/50 text-[#00f0ff] flex items-center space-x-2 animate-pulse shadow-[0_0_20px_rgba(0,240,255,0.4)]">
           <span className="w-2 h-2 rounded-full bg-[#00f0ff] animate-ping" />
-          <span>SYNAPSE OVERLOAD // 4.5X PARTICLES & SPINAL SURGE</span>
+          <span>SYNAPSE OVERLOAD // HIGH SPEED PARTICLES &amp; SPINAL SURGE</span>
         </div>
       )}
     </>

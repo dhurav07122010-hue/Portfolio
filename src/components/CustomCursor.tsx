@@ -7,27 +7,48 @@ interface ClickRipple {
 }
 
 export const CustomCursor: React.FC = () => {
-  const [position, setPosition] = useState({ x: -100, y: -100 })
-  const [trailingPos, setTrailingPos] = useState({ x: -100, y: -100 })
   const [isHovered, setIsHovered] = useState(false)
   const [isVisible, setIsVisible] = useState(() =>
     typeof window !== 'undefined' ? window.matchMedia('(pointer: fine)').matches : false
   )
   const [ripples, setRipples] = useState<ClickRipple[]>([])
+
+  const dotRef = useRef<HTMLDivElement | null>(null)
+  const ringRef = useRef<HTMLDivElement | null>(null)
+  const badgeRef = useRef<HTMLDivElement | null>(null)
   const animRef = useRef<number | null>(null)
+
+  const mousePos = useRef({ x: -100, y: -100 })
+  const trailingPos = useRef({ x: -100, y: -100 })
+  const isHoveredRef = useRef(false)
 
   useEffect(() => {
     const media = window.matchMedia('(pointer: fine)')
     if (!media.matches) return
 
-    const handleMouseMove = (e: MouseEvent) => {
-      setPosition({ x: e.clientX, y: e.clientY })
+    let lastCheckTime = 0
 
-      const target = e.target as HTMLElement | null
-      const isInteractive = Boolean(
-        target?.closest('button, a, input, textarea, select, [data-cursor-hover], .clickable, .cursor-pointer')
-      )
-      setIsHovered(isInteractive)
+    const handleMouseMove = (e: MouseEvent) => {
+      mousePos.current.x = e.clientX
+      mousePos.current.y = e.clientY
+
+      if (dotRef.current) {
+        dotRef.current.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0) translate(-50%, -50%)`
+      }
+
+      // Throttle interactive check to every 60ms to avoid DOM traversal on every sub-pixel move
+      const now = performance.now()
+      if (now - lastCheckTime > 60) {
+        lastCheckTime = now
+        const target = e.target as HTMLElement | null
+        const isInteractive = Boolean(
+          target?.closest('button, a, input, textarea, select, [data-cursor-hover], .clickable, .cursor-pointer')
+        )
+        if (isInteractive !== isHoveredRef.current) {
+          isHoveredRef.current = isInteractive
+          setIsHovered(isInteractive)
+        }
+      }
     }
 
     const handleClick = (e: MouseEvent) => {
@@ -36,7 +57,7 @@ export const CustomCursor: React.FC = () => {
         x: e.clientX,
         y: e.clientY,
       }
-      setRipples((prev) => [...prev.slice(-4), newRipple])
+      setRipples((prev) => [...prev.slice(-3), newRipple])
       setTimeout(() => {
         setRipples((prev) => prev.filter((r) => r.id !== newRipple.id))
       }, 700)
@@ -50,13 +71,17 @@ export const CustomCursor: React.FC = () => {
     document.addEventListener('mouseleave', handleMouseLeave)
     document.addEventListener('mouseenter', handleMouseEnter)
 
-    let curX = -100
-    let curY = -100
-
     const updateTrailing = () => {
-      curX += (position.x - curX) * 0.18
-      curY += (position.y - curY) * 0.18
-      setTrailingPos({ x: curX, y: curY })
+      trailingPos.current.x += (mousePos.current.x - trailingPos.current.x) * 0.22
+      trailingPos.current.y += (mousePos.current.y - trailingPos.current.y) * 0.22
+
+      if (ringRef.current) {
+        ringRef.current.style.transform = `translate3d(${trailingPos.current.x}px, ${trailingPos.current.y}px, 0) translate(-50%, -50%)`
+      }
+      if (badgeRef.current) {
+        badgeRef.current.style.transform = `translate3d(${trailingPos.current.x}px, ${trailingPos.current.y}px, 0)`
+      }
+
       animRef.current = requestAnimationFrame(updateTrailing)
     }
     animRef.current = requestAnimationFrame(updateTrailing)
@@ -68,7 +93,7 @@ export const CustomCursor: React.FC = () => {
       document.removeEventListener('mouseenter', handleMouseEnter)
       if (animRef.current) cancelAnimationFrame(animRef.current)
     }
-  }, [position.x, position.y])
+  }, [])
 
   if (!isVisible) return null
 
@@ -92,20 +117,23 @@ export const CustomCursor: React.FC = () => {
 
       {/* Center Laser Dot */}
       <div
-        className="fixed top-0 left-0 pointer-events-none z-50 rounded-full bg-[#00f0ff] transition-transform duration-75"
+        ref={dotRef}
+        className="fixed top-0 left-0 pointer-events-none z-50 rounded-full bg-[#00f0ff] will-change-transform"
         style={{
-          transform: `translate3d(${position.x}px, ${position.y}px, 0) translate(-50%, -50%)`,
+          transform: 'translate3d(-100px, -100px, 0) translate(-50%, -50%)',
           width: isHovered ? '8px' : '4px',
           height: isHovered ? '8px' : '4px',
           boxShadow: '0 0 12px #00f0ff, 0 0 24px #00f0ff',
+          transition: 'width 0.15s, height 0.15s',
         }}
       />
 
       {/* Outer Reticle with Crosshairs */}
       <div
-        className="fixed top-0 left-0 pointer-events-none z-50 rounded-full border border-[#00f0ff]/50 transition-[width,height,background-color,border-color] duration-200 ease-out flex items-center justify-center"
+        ref={ringRef}
+        className="fixed top-0 left-0 pointer-events-none z-50 rounded-full border border-[#00f0ff]/50 transition-[width,height,background-color,border-color] duration-200 ease-out flex items-center justify-center will-change-transform"
         style={{
-          transform: `translate3d(${trailingPos.x}px, ${trailingPos.y}px, 0) translate(-50%, -50%)`,
+          transform: 'translate3d(-100px, -100px, 0) translate(-50%, -50%)',
           width: isHovered ? '58px' : '32px',
           height: isHovered ? '58px' : '32px',
           backgroundColor: isHovered ? 'rgba(0, 240, 255, 0.08)' : 'transparent',
@@ -122,12 +150,13 @@ export const CustomCursor: React.FC = () => {
       {/* Floating HUD Coordinates Badge next to cursor */}
       {isHovered && (
         <div
-          className="fixed top-0 left-0 pointer-events-none z-50 font-mono text-[9px] text-[#00f0ff] tracking-widest pl-6 pt-3 select-none"
+          ref={badgeRef}
+          className="fixed top-0 left-0 pointer-events-none z-50 font-mono text-[9px] text-[#00f0ff] tracking-widest pl-6 pt-3 select-none will-change-transform"
           style={{
-            transform: `translate3d(${trailingPos.x}px, ${trailingPos.y}px, 0)`,
+            transform: 'translate3d(-100px, -100px, 0)',
           }}
         >
-          <span>[{Math.round(position.x)}, {Math.round(position.y)}] // ENGAGE</span>
+          <span>ENGAGE // ACTIVE</span>
         </div>
       )}
     </>
